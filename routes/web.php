@@ -64,6 +64,9 @@ Route::middleware([
         ]
     ]);
 
+    Route::get('usuarios/desabilitar/{id}', [userController::class, 'desabilitar'])
+        ->name('usuario.desabilitar');
+
     // ===========================
     // ROTAS DE CLASSES
     // ===========================

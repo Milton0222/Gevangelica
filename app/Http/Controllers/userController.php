@@ -14,7 +14,7 @@ class userController extends Controller
      */
     public function index()
     {
-        $usuarios = User::orderby('created_at','DESC')->get();
+        $usuarios = User::orderby('created_at', 'DESC')->get();
         return view('gerir.user', compact('usuarios'));
     }
 
@@ -27,28 +27,85 @@ class userController extends Controller
         return view('gerir.user_create');
     }
 
+    public function desabilitar($id){
+
+        $usuario = User::findorfail($id);
+
+        if(Auth::user()->isAdmin){
+            $usuario->update([
+                'isPastar' => 0,
+                'isAdmin' => 0,
+                'isSecretario' => 0,
+                'isMembro' => 0,
+                'isTesoureiro' => 0,
+                'isLider'=>0
+
+            ]);
+            alert(Auth::user()->name,'Conta desabilitada','info');
+        }
+        return redirect()->route('usuario.index');
+
+    }
+
     /**
      * Store a newly created resource in storage.
      * POST /usuarios
      */
     public function store(Request $request)
     {
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-            'isPastor' => 'boolean',
-            'isAdmin' => 'boolean',
-            'isSecretario' => 'boolean',
-            'isLider' => 'boolean',
-            'isTesoureiro' => 'boolean',
-            'isMembro' => 'boolean',
         ]);
 
-        $validated['password'] = bcrypt($validated['password']);
+        //  dd($request->all());
 
-        User::create($validated);
-        alert($validated['name'],'Usuário criado com sucesso!','success');
+        if ($request->isPastor == 'on') {
+
+            User::create([
+                'name' => $validated['name'],
+                'email' => strtolower($validated['email']),
+                'password' => bcrypt(123456789),
+                'isPastar' => 1,
+                'isAdmin' => 1
+            ]);
+            alert($validated['name'], 'Usuário criado com sucesso como Pastor!', 'success');
+        } elseif ($request->isSecretario == 'on') {
+            User::create([
+                'name' => $validated['name'],
+                'email' => strtolower($validated['email']),
+                'password' => bcrypt(123456789),
+                'isSecretario' => 1
+            ]);
+            alert($validated['name'], 'Usuário criado com sucesso como Secretario(a)!', 'success');
+        } elseif ($request->isMembro == 'on') {
+            User::create([
+                'name' => $validated['name'],
+                'email' => strtolower($validated['email']),
+                'password' => bcrypt(123456789),
+                'isMembro' => 1
+            ]);
+            alert($validated['name'], 'Usuário criado com sucesso como Membro!', 'success');
+        } elseif ($request->isLider == 'on') {
+            User::create([
+                'name' => $validated['name'],
+                'email' => strtolower($validated['email']),
+                'password' => bcrypt(123456789),
+                'isLider' => 1
+            ]);
+            alert($validated['name'], 'Usuário criado com sucesso como Lider!', 'success');
+        } elseif ($request->isTesoureiro == 'on') {
+            User::create([
+                'name' => $validated['name'],
+                'email' => strtolower($validated['email']),
+                'password' => bcrypt(123456789),
+                'isTesoureiro' => 1
+            ]);
+            alert($validated['name'], 'Usuário criado com sucesso como Tesoureiro!', 'success');
+        } else {
+            alert(Auth::user()->name, 'Selecionar um tipo de conta', 'info');
+        }
         return redirect()->route('usuario.index');
     }
 
@@ -80,23 +137,69 @@ class userController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $usuario->id,
-            'password' => 'nullable|string|min:8|confirmed',
-            'isPastor' => 'boolean',
-            'isAdmin' => 'boolean',
-            'isSecretario' => 'boolean',
-            'isLider' => 'boolean',
-            'isTesoureiro' => 'boolean',
-            'isMembro' => 'boolean',
         ]);
+//dd($usuario);
+        if ($request->isPastor == 'on') {
 
-        if ($validated['password'] ?? null) {
-            $validated['password'] = bcrypt($validated['password']);
+            $usuario->update([
+                'name' => $validated['name'],
+                'email' => strtolower($validated['email']),
+                'isPastar' => 1,
+                'isAdmin' => 1,
+                'isSecretario' => 0,
+                'isMembro' => 0,
+                'isTesoureiro' => 0,
+                'isLider'=>0
+            ]);
+        } elseif ($request->isSecretario == 'on') {
+            $usuario->update([
+                'name' => $validated['name'],
+                'email' => strtolower($validated['email']),
+                'isPastar' => 0,
+                'isAdmin' => 0,
+                'isSecretario' => 1,
+                'isMembro' => 0,
+                'isTesoureiro' => 0,
+                'isLider'=>0
+            ]);
+        } elseif ($request->isMembro == 'on') {
+            $usuario->update([
+                'name' => $validated['name'],
+                'email' => strtolower($validated['email']),
+                'isPastar' => 0,
+                'isAdmin' => 0,
+                'isSecretario' => 0,
+                'isMembro' => 1,
+                'isTesoureiro' => 0,
+                'isLider'=>0
+            ]);
+        } elseif ($request->isLider == 'on') {
+            $usuario->update([
+                'name' => $validated['name'],
+                'email' => strtolower($validated['email']),
+                'isPastar' => 0,
+                'isAdmin' => 0,
+                'isSecretario' => 0,
+                'isMembro' => 0,
+                'isTesoureiro' => 0,
+                'isLider'=>1
+            ]);
+        } elseif ($request->isTesoureiro == 'on') {
+            $usuario->update([
+                'name' => $validated['name'],
+                'email' => strtolower($validated['email']),
+                'isPastar' => 0,
+                'isAdmin' => 0,
+                'isSecretario' => 0,
+                'isMembro' => 0,
+                'isTesoureiro' => 1,
+                'isLider'=>0
+            ]);
         } else {
-            unset($validated['password']);
+            alert(Auth::user()->name, 'Selecionar um tipo de conta', 'info');
         }
 
-        $usuario->update($validated);
-        alert($usuario['name'],'Usuário atualizado com sucesso!','success');
+        alert($usuario['name'], 'Usuário atualizado com sucesso!', 'success');
         return redirect()->route('usuario.index');
     }
 
@@ -106,11 +209,11 @@ class userController extends Controller
      */
     public function destroy(User $usuario)
     {
-        if(Auth::user()->isAdmin){
-                    $usuario->delete();
-            alert($usuario['name'],'Utilizador apagado com sucesso.','success');
-        }else{
-            alert(Auth::user()->name,'Utilizador sem permissão','info');
+        if (Auth::user()->isAdmin) {
+            $usuario->delete();
+            alert($usuario['name'], 'Utilizador apagado com sucesso.', 'success');
+        } else {
+            alert(Auth::user()->name, 'Utilizador sem permissão', 'info');
         }
         return redirect()->route('usuario.index')->with('success', 'Usuário deletado com sucesso!');
     }
