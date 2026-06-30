@@ -19,4 +19,14 @@ class eventos extends Model
         'finalidade',
         'tema'
     ];
+
+    /**
+     * Relacionamento: Um evento pode ter múltiplas classes/turmas.
+     * Motivo: Um evento da igreja (como acampamento, retiro, seminário) pode ter várias classes oferecidas.
+     * Facilita a organização hierárquica: eventos contêm classes que contêm membros.
+     */
+    public function classes()
+    {
+        return $this->hasMany(classes::class, 'evento_id');
+    }
 }

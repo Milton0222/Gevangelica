@@ -63,7 +63,7 @@
                     <li class="dropdown-item">
                         <button class="dropdown-btn"><i class="fas fa-user-shield"></i> Utilizadores <i class="fas fa-caret-down arrow"></i></button>
                         <ul class="dropdown-container">
-                            <li><a href="{{route('user.index')}}"><i class="fas fa-user-cog"></i> Gerir Perfis</a></li>
+                            <li><a href="{{route('usuario.index')}}"><i class="fas fa-user-cog"></i> Gerir Perfis</a></li>
                             <li><a href="#"><i class="fas fa-history"></i> Logs do Sistema</a></li>
                         </ul>
                     </li>

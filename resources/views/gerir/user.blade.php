@@ -45,34 +45,24 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            @foreach ($usuarios as $user)
+                                 <tr>
                                 <td><div class="avatar">MA</div></td>
-                                <td><strong>Milton Augusto Francisco</strong></td>
-                              
-                                <td>12/10/2018</td>
-                                <td><span class="badge badge-info">Mídias / TI</span></td>
+                                <td><strong>{{$user->name}}</strong></td>
+                                <td>{{$user->email}}</td>
+                                <td><span class="badge badge-info">
+                                    .....
+                                </span></td>
                                 <td><span class="badge badge-success">Ativo</span></td>
                                 <td class="text-center">
                                     <div class="table-actions">
                                         <button class="btn-action edit" title="Editar"><i class="fas fa-edit"></i></button>
-                                        <button class="btn-action delete" title="Eliminar"><i class="fas fa-trash-alt"></i></button>
+                                        <button class="btn-action delete" onclick="apagar('{{$user->id}}','{{$user->name}}','{{$user->email}}')" title="Eliminar"><i class="fas fa-trash-alt"></i></button>
                                     </div>
                                 </td>
                             </tr>
-                            <tr>
-                                <td><div class="avatar">sc</div></td>
-                                <td>Sara Camati</td>
-                            
-                                <td>24/05/2021</td>
-                                <td><span class="badge badge-info">Louvor</span></td>
-                                <td><span class="badge badge-success">Ativo</span></td>
-                                <td class="text-center">
-                                    <div class="table-actions">
-                                        <button class="btn-action edit"><i class="fas fa-edit"></i></button>
-                                        <button class="btn-action delete"><i class="fas fa-trash-alt"></i></button>
-                                    </div>
-                                </td>
-                            </tr>
+                            @endforeach
+                           
                         </tbody>
                     </table>
                 </div>
@@ -118,3 +108,34 @@
             </div>
         </div>
     </div>
+
+
+    <script>
+         //apagar utilizador
+
+         function apagar(id,name,email){
+            if(confirm(`Desejas apagar o utilizador\nID: ${id}\nNome:${name}\nUserName:${email}`)){
+                // Criar formulário para enviar DELETE via POST (Laravel)
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = `/usuarios/${id}`;
+
+            const csrfToken = document.querySelector('meta[name="csrf-token"]');
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = '_token';
+            input.value = csrfToken ? csrfToken.getAttribute('content') : '';
+
+            const methodInput = document.createElement('input');
+            methodInput.type = 'hidden';
+            methodInput.name = '_method';
+            methodInput.value = 'DELETE';
+
+            form.appendChild(input);
+            form.appendChild(methodInput);
+            document.body.appendChild(form);
+            form.submit();
+
+            }
+         }
+    </script>
