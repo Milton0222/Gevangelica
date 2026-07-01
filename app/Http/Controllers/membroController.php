@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\membros;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class membroController extends Controller
 {
@@ -12,9 +13,28 @@ class membroController extends Controller
      * Display a listing of the resource.
      * GET /membros
      */
-    public function index()
+    public function index(Request $request = null)
     {
-        $membros = membros::with('user')->paginate(15);
+
+        $request = $request ?: request();
+
+        $query = membros::query();
+
+        if (filled($request->situacao)) {
+            if ($request->situacao == 'all') {
+                $membros = $query->with('user')->orderby('id', 'desc')->get();
+                return view('gerir.membros', compact('membros'));
+            }
+
+            $query->where('situacao', $request->situacao);
+        }
+        if (filled($request->nome)) {
+            $query->where('nome', '%' . $request->nome . '%');
+        }
+
+        $membros = $query->with('user')->orderby('id', 'desc')->get();
+
+
         return view('gerir.membros', compact('membros'));
     }
 
@@ -25,6 +45,7 @@ class membroController extends Controller
     public function create()
     {
         $users = User::all();
+
         return view('gerir.membros_create', compact('users'));
     }
 
@@ -34,21 +55,30 @@ class membroController extends Controller
      */
     public function store(Request $request)
     {
+
+
         $validated = $request->validate([
             'nome' => 'required|string|max:255',
             'morada' => 'required|string|max:255',
-            'estado_civil' => 'required|in:solteiro,casado,viúvo,divorciado',
-            'genero' => 'required|in:masculino,feminino',
+            'email' => 'required|string|max:255',
+            'estado_civil' => 'required|in:Solteiro,Casado,Viuvo,Divorciado',
+            'genero' => 'required|in:M,F',
             'telefone' => 'required|string|max:20',
             'data_nascimento' => 'required|date',
             'data_batismo' => 'nullable|date',
-            'situcao' => 'required|in:ativo,inativo,afastado',
-            'cargo' => 'nullable|string|max:100',
-            'user_id' => 'nullable|exists:users,id',
+            'situacao' => 'required|in:Activo,Inativo,Transferido',
+            //'cargo' => 'nullable|string|max:100',
+            'user_id' => 'nullable',
         ]);
 
+
+        // dd($request->all());
+
+        $validated['user_id'] = Auth::user()->id;
+
         membros::create($validated);
-        return redirect()->route('membro.index')->with('success', 'Membro criado com sucesso!');
+        alert($validated['nome'], 'Membro criado com sucesso!', 'success');
+        return redirect()->route('membro.index');
     }
 
     /**
@@ -80,18 +110,32 @@ class membroController extends Controller
         $validated = $request->validate([
             'nome' => 'required|string|max:255',
             'morada' => 'required|string|max:255',
-            'estado_civil' => 'required|in:solteiro,casado,viúvo,divorciado',
-            'genero' => 'required|in:masculino,feminino',
+            'email' => 'required|string|max:255',
+            'estado_civil' => 'required|in:Solteiro,Casado,Viúvo,Divorciado',
+            'genero' => 'required|in:M,F',
             'telefone' => 'required|string|max:20',
             'data_nascimento' => 'required|date',
             'data_batismo' => 'nullable|date',
-            'situcao' => 'required|in:ativo,inativo,afastado',
-            'cargo' => 'nullable|string|max:100',
-            'user_id' => 'nullable|exists:users,id',
+            'situacao' => 'required|in:Activo,Inativo,Transferido',
+
+
         ]);
 
-        $membro->update($validated);
-        return redirect()->route('membro.index')->with('success', 'Membro atualizado com sucesso!');
+        $membro->update([
+            'nome' => $validated['nome'],
+            'morada' => $validated['morada'],
+            'email' => $validated['email'],
+            'estado_civil' => $validated['estado_civil'],
+            'genero' => $validated['genero'],
+            'telefone' => $validated['telefone'],
+            'data_nascimento' => $validated['data_nascimento'],
+            'data_batismo' => $validated['data_batismo'],
+            'situacao' => $validated['situacao'],
+            'user_id' => Auth::user()->id
+        ]);
+
+        alert($validated['nome'], 'Membro atualizado com sucesso!', 'success');
+        return redirect()->route('membro.index');
     }
 
     /**
@@ -101,6 +145,7 @@ class membroController extends Controller
     public function destroy(membros $membro)
     {
         $membro->delete();
-        return redirect()->route('membro.index')->with('success', 'Membro deletado com sucesso!');
+        alert($membro['nome'], 'Membro deletado com sucesso!', 'info');
+        return redirect()->route('membro.index');
     }
 }

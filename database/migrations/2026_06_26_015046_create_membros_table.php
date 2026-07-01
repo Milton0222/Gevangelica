@@ -20,9 +20,9 @@ return new class extends Migration
             $table->enum('genero',['M','F']);
             $table->date('data_nascimento');
             $table->date('data_batismo')->nullable();
-            $table->enum('situacao',['Transferido','Activo']);
+            $table->enum('situacao',['Transferido','Inativo','Activo'])->default('Activo');
             $table->string('cargo',50)->nullable();
-
+            $table->string('email')->unique();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade');
 

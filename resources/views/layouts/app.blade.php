@@ -33,8 +33,10 @@
                     <li>
                         <a href="{{route('dashboard')}}" class="nav-link active"><i class="fas fa-chart-line"></i> Dashboard</a>
                     </li>
-
-                    <li class="dropdown-item">
+@if(Auth::user()->isAdmin==0 && Auth::user()->isPastar==0 && Auth::user()->isMembro==0 && Auth::user()->isSecretario==0 && Auth::user()->isTesoureiro==0 && Auth::user()->isLider==0)
+                   
+    @else
+     <li class="dropdown-item">
                         <button class="dropdown-btn"><i class="fas fa-users"></i> Membros <i class="fas fa-caret-down arrow"></i></button>
                         <ul class="dropdown-container">
                             <li><a href="#"><i class="fas fa-user-plus"></i> Registar Membro</a></li>
@@ -67,6 +69,8 @@
                             <li><a href="#"><i class="fas fa-history"></i> Logs do Sistema</a></li>
                         </ul>
                     </li>
+
+    @endif
                 </ul>
             </nav>
         </aside>

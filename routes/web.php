@@ -7,6 +7,7 @@ use App\Http\Controllers\DepartamentoController;
 use App\Http\Controllers\EventoController;
 use App\Http\Controllers\SalaController;
 use App\Http\Controllers\ContribuicaoController;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,9 +31,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [Controller::class,'index'])->name('dashboard');
 
     // ===========================
     // ROTAS DE MEMBROS
@@ -66,6 +65,7 @@ Route::middleware([
 
     Route::get('usuarios/desabilitar/{id}', [userController::class, 'desabilitar'])
         ->name('usuario.desabilitar');
+    
 
     // ===========================
     // ROTAS DE CLASSES

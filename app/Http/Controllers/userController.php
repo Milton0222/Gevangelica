@@ -12,9 +12,31 @@ class userController extends Controller
      * Display a listing of the resource.
      * GET /usuarios
      */
-    public function index()
+    public function index(Request $request=null)
     {
-        $usuarios = User::orderby('created_at', 'DESC')->get();
+        $request=$request?: Request();
+
+        $query=User::query();
+
+        if(filled($request->email)){
+               $query->where('email', strtolower($request->email));
+
+        }
+        if(filled($request->estado)){
+            if($request->estado==1){
+                 $query->where('isAdmin',1)->orwhere('isMembro',1)
+                 ->orwhere('isSecretario',1)->orwhere('isTesoureiro',1)
+                 ->orwhere('isLider',1)->orwhere('isPastar',1);
+
+            }elseif($request->estado==0){
+                $query->where('isAdmin',0)->where('isMembro',0)
+                ->where('isSecretario',0)->where('isTesoureiro',0)
+                ->where('isLider',0)->where('isPastar',0);
+            }elseif($request->estado=='all'){
+                $query->get();
+            }
+        }
+        $usuarios = $query->orderby('created_at', 'DESC')->get();
         return view('gerir.user', compact('usuarios'));
     }
 
@@ -46,6 +68,7 @@ class userController extends Controller
         return redirect()->route('usuario.index');
 
     }
+   
 
     /**
      * Store a newly created resource in storage.
@@ -61,7 +84,7 @@ class userController extends Controller
 
         //  dd($request->all());
 
-        if ($request->isPastor == 'on') {
+        if ($request->isPastar == 'on') {
 
             User::create([
                 'name' => $validated['name'],

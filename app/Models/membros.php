@@ -16,8 +16,9 @@ class membros extends Model
         'telefone',
         'data_nascimento',
         'data_batismo',
-        'situcao',
+        'situacao',
         'cargo',
+        'email',
         'user_id'
     ];
 

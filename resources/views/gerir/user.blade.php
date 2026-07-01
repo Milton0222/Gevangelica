@@ -14,14 +14,15 @@
         <form class="filter-form">
             <div class="form-group">
                 <label>Pesquisar por Nome</label>
-                <input type="text" placeholder="Ex: Nome do membro...">
+                <input type="email" placeholder="Ex: exemplo@gmail.com" id="fillteremail">
             </div>
             <div class="form-group">
                 <label>Tipos</label>
-                <select>
-                    <option value="">Todos</option>
-                    <option value="ativo">Ativo</option>
-                    <option value="inativo">Inativo</option>
+                <select id="fillterestado">
+                    <option value="">Selecionar</option>
+                    <option value="1">Ativo</option>
+                    <option value="0">Inativo</option>
+                    <option value="all">Todos</option>
                 </select>
             </div>
 
@@ -46,6 +47,39 @@
             </thead>
             <tbody>
                 @foreach ($usuarios as $user)
+                  @if($user->isAdmin==0 && $user->isPastar==0 && $user->isMembro==0 && $user->isSecretario==0 && $user->isTesoureiro==0 && $user->isLider==0)
+                <tr style="color: gray;">
+                    <td>
+                        <div class="avatar">MA</div>
+                    </td>
+                    <td><strong>{{$user->name}}</strong></td>
+                    <td>{{$user->email}}</td>
+                    <td><span class="badge badge-info">
+                            @if($user->isAdmin==1)
+                               Admin
+                            @elseif($user->isPastar==1)
+                                Pastor
+                            @elseif($user->isMembro==1)
+                                Membro
+                            @elseif($user->isSecretario==1)
+                                Secretario(a)
+                            @elseif ($user->isTesoureiro==1)
+                                Tesoureiro
+                            @elseif ($user->isLider==1)
+                                Lider
+                            @else
+                              Sem acesso
+                            @endif
+                        </span></td>
+                    <td><span class="badge badge-danger">Desabilitado</span></td>
+                    <td class="text-center">
+                        <div class="table-actions">
+                            <button class="btn-action edit" onclick="actualizar('{{$user->id}}','{{$user->name}}','{{$user->email}}')" title="Habilitar"><i class="fas fa-edit"></i></button>
+                           
+                        </div>
+                    </td>
+                </tr>
+                @else
                 <tr>
                     <td>
                         <div class="avatar">MA</div>
@@ -65,6 +99,8 @@
                                 Tesoureiro
                             @elseif ($user->isLider==1)
                                 Lider
+                            @else
+                              Sem acesso
                             @endif
                         </span></td>
                     <td><span class="badge badge-success">Ativo</span></td>
@@ -72,10 +108,12 @@
                         <div class="table-actions">
                             <button class="btn-action edit" onclick="actualizar('{{$user->id}}','{{$user->name}}','{{$user->email}}')" title="Editar"><i class="fas fa-edit"></i></button>
                             <button class="btn-action delete" onclick="apagar('{{$user->id}}','{{$user->name}}','{{$user->email}}')" title="Eliminar"><i class="fas fa-trash-alt"></i></button>
-                            <a class="btn-action edit" href="{{route('usuario.desabilitar',$user->id)}}" title="Desabilitar/habilitar"><i class="fas fa-check-circle"></i></a>
+                            <a class="btn-action delete" href="{{route('usuario.desabilitar',$user->id)}}" title="Desabilitar"><i class="fas fa-check-circle"></i></a>
                         </div>
                     </td>
                 </tr>
+
+                @endif
                 @endforeach
 
             </tbody>
@@ -195,4 +233,19 @@
 
         }
     }
+
+    function fillter(){
+        const email=document.getElementById('fillteremail').value;
+        const estado=document.getElementById('fillterestado').value;
+
+        if(!email && !estado)return;
+
+        const parans=new URLSearchParams();
+        if(email)parans.append('email', email);
+        if(estado)parans.append('estado', estado);
+        window.location.href='/usuarios?'+parans.toString();
+    }
+
+    document.getElementById('fillteremail').addEventListener('input',fillter);
+    document.getElementById('fillterestado').addEventListener('change', fillter);
 </script>

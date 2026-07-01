@@ -13,28 +13,28 @@
             <div class="card-icon"><i class="fas fa-users"></i></div>
             <div class="card-info">
                 <h3>Total de Membros</h3>
-                <p>1,248</p>
+                <p>{{$membros_c}}</p>
             </div>
         </div>
         <div class="card">
             <div class="card-icon male"><i class="fas fa-mars"></i></div>
             <div class="card-info">
                 <h3>Homens</h3>
-                <p>542</p>
+                <p>{{$m}}</p>
             </div>
         </div>
         <div class="card">
             <div class="card-icon female"><i class="fas fa-venus"></i></div>
             <div class="card-info">
                 <h3>Mulheres</h3>
-                <p>706</p>
+                <p>{{$f}}</p>
             </div>
         </div>
         <div class="card">
             <div class="card-icon active-member"><i class="fas fa-check-circle"></i></div>
             <div class="card-info">
                 <h3>Membros Ativos</h3>
-                <p>94%</p>
+                <p>{{$membros_a}}</p>
             </div>
         </div>
     </div>
