@@ -16,6 +16,14 @@
                     <label>Pesquisar por Tipo</label>
                     <input type="text" placeholder="Ex: Dízimo">
                 </div>
+                <div class="form-group">
+                    <label for="">Tipo</label>
+                    <select id="filltertipo">
+                        <option value="">Selecionar</option>
+                        <option value="Oferta"><i class="fas fa-heart"></i>Ofertas</option>
+                        <option value="Dizimo"><i class="fas fa-coins"></i>Dízimos</option>
+                    </select>
+                </div>
             </form>
         </div>
 

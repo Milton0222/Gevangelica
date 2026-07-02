@@ -47,8 +47,8 @@
                     <li class="dropdown-item">
                         <button class="dropdown-btn"><i class="fas fa-hand-holding-usd"></i> Finanças <i class="fas fa-caret-down arrow"></i></button>
                         <ul class="dropdown-container">
-                            <li><a href="#"><i class="fas fa-coins"></i> Dízimos</a></li>
-                            <li><a href="#"><i class="fas fa-heart"></i> Ofertas</a></li>
+                            <li><a href="{{route('contribuicao.index')}}"><i class="fas fa-coins"></i>Contribuições</a></li>
+                            <!--<li><a href="#"><i class="fas fa-heart"></i> Ofertas</a></li>-->
                             <li><a href="#"><i class="fas fa-file-invoice-dollar"></i> Relatórios</a></li>
                         </ul>
                     </li>
