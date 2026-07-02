@@ -10,7 +10,8 @@ class salas extends Model
     use HasFactory;
     protected $fillable = [
         'n_sala',
-        'estado'
+        'estado',
+        'user_id'
     ];
 
     /**

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\salas;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SalaController extends Controller
 {
@@ -11,9 +12,24 @@ class SalaController extends Controller
      * Exibe a lista de todas as salas.
      * GET /salas
      */
-    public function index()
+    public function index(Request $request = null)
     {
-        $salas = salas::paginate(15);
+
+        $request = $request ?: request();
+
+        $query = salas::query();
+
+        if (filled($request->sala)) {
+            $query->where('n_sala', $request->sala);
+        }
+        if (filled($request->estado)) {
+            if ($request->estado == 'all') {
+                $salas = $query->paginate(15);
+                return view('gerir.salas', compact('salas'));
+            }
+            $query->where('estado',$request->estado);
+        }
+        $salas = $query->paginate(15);
         return view('gerir.salas', compact('salas'));
     }
 
@@ -33,12 +49,21 @@ class SalaController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'n_sala' => 'required|string|max:50|unique:salas',
-            'estado' => 'required|in:disponível,ocupada,manutenção',
+            'n_sala' => 'required|unique:salas',
         ]);
 
-        salas::create($validated);
-        return redirect()->route('sala.index')->with('success', 'Sala criada com sucesso!');
+        if (salas::where('n_sala', $validated['n_sala'])->first()) {
+            alert($validated['n_sala'], 'Ja Foi registada, verificar identificador na porta.', 'info');
+        } else {
+            salas::create([
+                'n_sala' => $validated['n_sala'],
+                'estado' => 'Livre',
+                'user_id' => Auth::user()->id
+
+            ]);
+            alert($validated['n_sala'], 'Sala criada com sucesso!', 'success');
+        }
+        return redirect()->route('sala.index');
     }
 
     /**
@@ -68,11 +93,12 @@ class SalaController extends Controller
     {
         $validated = $request->validate([
             'n_sala' => 'required|string|max:50|unique:salas,n_sala,' . $sala->id,
-            'estado' => 'required|in:disponível,ocupada,manutenção',
+            'estado' => 'required|in:Reservado,Livre,Pendente',
         ]);
 
         $sala->update($validated);
-        return redirect()->route('sala.index')->with('success', 'Sala atualizada com sucesso!');
+        alert($sala['n_sala'], 'Sala atualizada com sucesso!', 'info');
+        return redirect()->route('sala.index');
     }
 
     /**
@@ -82,6 +108,7 @@ class SalaController extends Controller
     public function destroy(salas $sala)
     {
         $sala->delete();
-        return redirect()->route('sala.index')->with('success', 'Sala deletada com sucesso!');
+        alert($sala['n_sala'], 'Sala deletada com sucesso!', 'info');
+        return redirect()->route('sala.index');
     }
 }
