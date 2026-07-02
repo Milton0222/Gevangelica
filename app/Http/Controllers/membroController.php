@@ -29,7 +29,7 @@ class membroController extends Controller
             $query->where('situacao', $request->situacao);
         }
         if (filled($request->nome)) {
-            $query->where('nome', '%' . $request->nome . '%');
+            $query->where('nome', 'like','%' . $request->nome . '%');
         }
 
         $membros = $query->with('user')->orderby('id', 'desc')->get();
@@ -55,8 +55,6 @@ class membroController extends Controller
      */
     public function store(Request $request)
     {
-
-
         $validated = $request->validate([
             'nome' => 'required|string|max:255',
             'morada' => 'required|string|max:255',

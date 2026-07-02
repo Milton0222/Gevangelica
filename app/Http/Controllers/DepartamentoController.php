@@ -13,12 +13,31 @@ class DepartamentoController extends Controller
      * Exibe a lista de todos os departamentos.
      * GET /departamentos
      */
-    public function index()
+    public function index(Request $request = null)
     {
-        $departamentos = departamentos::with('lider')->paginate(15);
 
-        $lideres=membros::orderby('id','desc')->get();
-        return view('gerir.departamentos', compact('departamentos','lideres'));
+        $request = $request ?: request();
+
+        $query = departamentos::query();
+
+        if (filled($request->nome)) {
+            $query->where('nome','LIKE', '%' . $request->nome . '%');
+        }
+        if (filled($request->lider)) {
+
+            if ($request->lider == 'all') {
+                $departamentos = $query->with('lider')->paginate(15);
+
+                $lideres = membros::orderby('id', 'desc')->get();
+                return view('gerir.departamentos', compact('departamentos', 'lideres'));
+            }
+            $query->where('lider_id', $request->lider);
+        }
+
+        $departamentos = $query->with('lider')->paginate(15);
+
+        $lideres = membros::orderby('id', 'desc')->get();
+        return view('gerir.departamentos', compact('departamentos', 'lideres'));
     }
 
     /**
@@ -43,7 +62,7 @@ class DepartamentoController extends Controller
         ]);
 
         departamentos::create($validated);
-        alert($validated['nome'],'Departamento criado com sucesso!','success');
+        alert($validated['nome'], 'Departamento criado com sucesso!', 'success');
         return redirect()->route('departamento.index');
     }
 
@@ -79,7 +98,7 @@ class DepartamentoController extends Controller
         ]);
 
         $departamento->update($validated);
-        alert($departamento['nome'],'Departamento atualizado com sucesso!','info');
+        alert($departamento['nome'], 'Departamento atualizado com sucesso!', 'info');
         return redirect()->route('departamento.index');
     }
 
@@ -90,7 +109,7 @@ class DepartamentoController extends Controller
     public function destroy(departamentos $departamento)
     {
         $departamento->delete();
-        alert($departamento['nome'],'Departamento deletado com sucesso!','info');
+        alert($departamento['nome'], 'Departamento deletado com sucesso!', 'info');
         return redirect()->route('departamento.index');
     }
 }

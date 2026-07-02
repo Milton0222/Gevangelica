@@ -17,7 +17,18 @@
         <form class="filter-form">
             <div class="form-group">
                 <label>Pesquisar por Nome</label>
-                <input type="text" placeholder="Ex: Louvor">
+                <input type="text" id="fillternome" placeholder="Ex: Louvor">
+            </div>
+            <div class="form-group">
+                <label for="lider_id">Líder</label>
+                <select name="lider_id" id="fillterlider">
+                    <option value="">Selecionar</option>
+                   
+                    @foreach($lideres as $lider)
+                    <option value="{{ $lider->id }}">{{ $lider->nome }}</option>
+                    @endforeach
+                     <option value="all">Todos</option>
+                </select>
             </div>
         </form>
     </div>
@@ -42,9 +53,9 @@
                         <div class="table-actions">
                             <a href="{{ route('departamento.show', $departamento) }}" class="btn-action edit" title="Ver"><i class="fas fa-eye"></i></a>
                             <a onclick="actualizar('{{$departamento->id}}','{{$departamento->nome}}','{{$departamento->lider_id}}')" class="btn-action edit" title="Editar"><i class="fas fa-edit"></i></a>
-                           
-                           <button onclick="apagar('{{$departamento->id}}','{{$departamento->nome}}','{{$departamento->lider_id}}')" class="btn-action delete" title="Eliminar"><i class="fas fa-trash-alt"></i></button>
-                          
+
+                            <button onclick="apagar('{{$departamento->id}}','{{$departamento->nome}}','{{$departamento->lider_id}}')" class="btn-action delete" title="Eliminar"><i class="fas fa-trash-alt"></i></button>
+
                         </div>
                     </td>
                 </tr>
@@ -73,7 +84,7 @@
                     <select name="lider_id" id="lider_id">
                         <option value="">Selecionar</option>
                         @foreach($lideres as $lider)
-                            <option value="{{ $lider->id }}">{{ $lider->nome }}</option>
+                        <option value="{{ $lider->id }}">{{ $lider->nome }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -89,16 +100,32 @@
 
 
 <script>
+    //filter
+    function filtrar() {
 
+    const nome =document.getElementById('fillternome').value;
+    const lider =document.getElementById('fillterlider').value;
+
+    if(!nome && !lider)return;
+
+    const parans=new URLSearchParams();
+
+    if(nome)parans.append('nome',nome);
+    if(lider)parans.append('lider',lider);
+    window.location.href='/departamentos?'+parans.toString();
+
+    }
+
+    //listnner
+    document.getElementById('fillternome').addEventListener('input',filtrar);
+    document.getElementById('fillterlider').addEventListener('change',filtrar);
     //atualizar dados
-
-     //atualizar dados
 
     function actualizar(id, nome, lider) {
         //abrir modal
         document.getElementById('modalCadastro').classList.add("active");
 
-       
+
 
         //mudificar o headeer da modal cadtro
         document.getElementById('modal-title').textContent = `Editando dados de ${nome}`;
@@ -126,9 +153,9 @@
 
     //apagar dados
 
-    function apagar(id, nome, lider){
+    function apagar(id, nome, lider) {
 
-    if(confirm(`Desejas apagar o departamento com os seguintes dados:\nNome: ${nome}\nCodigo de registo: ${id}`)){
+        if (confirm(`Desejas apagar o departamento com os seguintes dados:\nNome: ${nome}\nCodigo de registo: ${id}`)) {
 
             // Criar formulário para enviar DELETE via POST (Laravel)
             const form = document.createElement('form');
@@ -150,6 +177,6 @@
             form.appendChild(methodInput);
             document.body.appendChild(form);
             form.submit();
-    }
+        }
     }
 </script>
