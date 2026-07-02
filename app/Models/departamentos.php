@@ -20,7 +20,7 @@ class departamentos extends Model
      */
     public function lider()
     {
-        return $this->belongsTo(User::class, 'lider_id');
+        return $this->belongsTo(membros::class, 'lider_id');
     }
 
     /**
@@ -35,4 +35,6 @@ class departamentos extends Model
             ->withPivot('data', 'hora_inicio', 'hora_fim', 'finalidade')
             ->withTimestamps();
     }
+
+    
 }

@@ -95,13 +95,5 @@ class User extends Authenticatable
         return $this->hasMany(classes::class, 'professor_id');
     }
 
-    /**
-     * Relacionamento: Um usuário pode ser líder de múltiplos departamentos.
-     * Motivo: Um líder pode coordenar vários departamentos dentro da estrutura da igreja.
-     * Útil para gerenciar responsabilidades de liderança.
-     */
-    public function departamentos()
-    {
-        return $this->hasMany(departamentos::class, 'lider_id');
-    }
+   
 }

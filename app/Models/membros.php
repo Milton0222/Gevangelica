@@ -51,4 +51,14 @@ class membros extends Model
     {
         return $this->belongsToMany(classes::class, 'membros_classes', 'membro_id', 'classe_id');
     }
+
+     /**
+     * Relacionamento: Um membro pode ser líder de múltiplos departamentos.
+     * Motivo: Um líder pode coordenar vários departamentos dentro da estrutura da igreja.
+     * Útil para gerenciar responsabilidades de liderança.
+     */
+    public function departamentos()
+    {
+        return $this->hasMany(departamentos::class, 'lider_id');
+    }
 }

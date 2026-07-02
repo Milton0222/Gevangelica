@@ -9,7 +9,7 @@
     @section('contente')
         <div class="table-container">
             <h3>{{ $departamento->nome }}</h3>
-            <p><strong>Líder:</strong> {{ $departamento->lider->name ?? 'N/A' }}</p>
+            <p><strong>Líder:</strong> {{ $departamento->lider->nome ?? 'N/A' }}</p>
             <div class="modal-right-footer">
                 <a href="{{ route('departamento.index') }}" class="btn btn-secondary-outline">Voltar</a>
             </div>

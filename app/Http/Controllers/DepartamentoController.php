@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\departamentos;
+use App\Models\membros;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,9 @@ class DepartamentoController extends Controller
     public function index()
     {
         $departamentos = departamentos::with('lider')->paginate(15);
-        return view('gerir.departamentos', compact('departamentos'));
+
+        $lideres=membros::orderby('id','desc')->get();
+        return view('gerir.departamentos', compact('departamentos','lideres'));
     }
 
     /**
@@ -36,11 +39,12 @@ class DepartamentoController extends Controller
     {
         $validated = $request->validate([
             'nome' => 'required|string|max:255|unique:departamentos',
-            'lider_id' => 'required|exists:users,id',
+            'lider_id' => 'required|exists:membros,id',
         ]);
 
         departamentos::create($validated);
-        return redirect()->route('departamento.index')->with('success', 'Departamento criado com sucesso!');
+        alert($validated['nome'],'Departamento criado com sucesso!','success');
+        return redirect()->route('departamento.index');
     }
 
     /**
@@ -71,11 +75,12 @@ class DepartamentoController extends Controller
     {
         $validated = $request->validate([
             'nome' => 'required|string|max:255|unique:departamentos,nome,' . $departamento->id,
-            'lider_id' => 'required|exists:users,id',
+            'lider_id' => 'required|exists:membros,id',
         ]);
 
         $departamento->update($validated);
-        return redirect()->route('departamento.index')->with('success', 'Departamento atualizado com sucesso!');
+        alert($departamento['nome'],'Departamento atualizado com sucesso!','info');
+        return redirect()->route('departamento.index');
     }
 
     /**
@@ -85,6 +90,7 @@ class DepartamentoController extends Controller
     public function destroy(departamentos $departamento)
     {
         $departamento->delete();
-        return redirect()->route('departamento.index')->with('success', 'Departamento deletado com sucesso!');
+        alert($departamento['nome'],'Departamento deletado com sucesso!','info');
+        return redirect()->route('departamento.index');
     }
 }
