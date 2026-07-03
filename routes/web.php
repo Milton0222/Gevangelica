@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\aluguerController;
 use App\Http\Controllers\membroController;
 use App\Http\Controllers\userController;
 use App\Http\Controllers\ClasseController;
@@ -126,6 +127,14 @@ Route::middleware([
             'destroy' => 'sala.destroy',
         ]
     ]);
+
+    //==================
+    //ROTAS ALUGUER SALAS
+
+    Route::resource('alugueres',aluguerController::class,[
+        'name'=>'alugures'
+    ]);
+    Route::delete('/alugueres/{sala}/{depa}',[aluguerController::class,'destroy']);
 
     // ===========================
     // ROTAS DE CONTRIBUIÇÕES

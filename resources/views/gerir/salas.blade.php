@@ -86,11 +86,7 @@
                             <option value="Pendente">Pendente</option>
                         </select>
                     </div>
-
                 </div>
-
-
-
                 <div class="modal-right-footer">
                     <button type="button" class="btn btn-secondary-outline" id="btnCancelarCadastro">Cancelar</button>
                     <button type="submit" class="btn btn-primary">Salvar Registo</button>

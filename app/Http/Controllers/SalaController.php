@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\salas;
+use App\Models\salas_departamentos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -73,7 +74,10 @@ class SalaController extends Controller
     public function show(salas $sala)
     {
         $sala->load('departamentos');
-        return view('gerir.salas_show', compact('sala'));
+          
+        $historico=salas_departamentos::where('sala_id',$sala['id'])->orderby('created_at','desc')->get();
+
+        return view('gerir.salas_show', compact('sala','historico'));
     }
 
     /**

@@ -57,7 +57,7 @@
                         <button class="dropdown-btn"><i class="fas fa-calendar-alt"></i> Eventos <i class="fas fa-caret-down arrow"></i></button>
                         <ul class="dropdown-container">
                             <li><a href="#"><i class="fas fa-church"></i> Cultos</a></li>
-                            <li><a href="#"><i class="fas fa-key"></i> Aluguer de Salas</a></li>
+                            <li><a href="{{route('alugueres.index')}}"><i class="fas fa-key"></i> Aluguer de Salas</a></li>
                             <li><a href="#"><i class="fas fa-book-open"></i> Estudos Bíblicos</a></li>
                         </ul>
                     </li>
