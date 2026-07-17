@@ -17,8 +17,8 @@
     <div class="filter-container">
         <form class="filter-form">
             <div class="form-group">
-                <label>Pesquisar por Nome</label>
-                <input type="text" placeholder="Ex: Culto">
+                <label>Pesquisar pela data</label>
+                <input type="date" placeholder="Ex: Culto" id="datafillter">
             </div>
         </form>
     </div>
@@ -48,9 +48,9 @@
                     <td>{{ $evento->estado }}</td>
                     <td class="text-center">
                         <div class="table-actions">
-                            <a href="{{ route('evento.show', $evento) }}" class="btn-action edit" title="Ver"><i class="fas fa-eye"></i>Ver</a>
-                            <a onclick="atualizar('{{$evento->id}}','{{$evento->nome}}','{{$evento->tipo}}','{{$evento->data}}','{{$evento->estado}}','{{$evento->local}}','{{$evento->hora}}','{{$evento->finalidade}}','{{$evento->tema}}','{{$evento->depa_id}}')" class="btn-action edit" title="Editar"><i class="fas fa-edit"></i>Editar</a>
-                            <button onclick="apagar('{{$evento->id}}','{{$evento->nome}}')" class="btn-action delete" title="Eliminar"><i class="fas fa-trash-alt"></i>apagar</button>
+                            <a href="{{ route('evento.show', $evento) }}" class="btn-action edit" title="Ver"><i class="fas fa-eye"></i></a>
+                            <a onclick="atualizar('{{$evento->id}}','{{$evento->nome}}','{{$evento->tipo}}','{{$evento->data}}','{{$evento->estado}}','{{$evento->local}}','{{$evento->hora}}','{{$evento->finalidade}}','{{$evento->tema}}','{{$evento->depa_id}}')" class="btn-action edit" title="Editar"><i class="fas fa-edit"></i></a>
+                            <button onclick="apagar('{{$evento->id}}','{{$evento->nome}}')" class="btn-action delete" title="Eliminar"><i class="fas fa-trash-alt"></i></button>
 
                         </div>
                     </td>
@@ -142,6 +142,19 @@
 </div>
 
 <script>
+
+    function fillter(){
+        const data=document.getElementById('datafillter').value;
+
+        if(!data) return;
+
+        const paran=new URLSearchParams();
+        if(data)paran.append('data',data);
+        window.location.href='/eventos?'+paran.toString();
+    }
+
+    document.getElementById('datafillter').addEventListener('input', fillter);
+
     function atualizar(id, nome, tipo, data, estado, local, hora, finalidade, tema, depa) {
 
         document.getElementById('modalCadastro').classList.add("active");

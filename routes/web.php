@@ -9,6 +9,7 @@ use App\Http\Controllers\EventoController;
 use App\Http\Controllers\SalaController;
 use App\Http\Controllers\ContribuicaoController;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\escController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -127,6 +128,12 @@ Route::middleware([
             'destroy' => 'sala.destroy',
         ]
     ]);
+
+    //========================
+    // ROTAS ESCOL
+
+    //========================
+    Route::resource('escola',escController::class);
 
     //==================
     //ROTAS ALUGUER SALAS

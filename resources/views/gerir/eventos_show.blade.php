@@ -8,7 +8,7 @@
 
     @section('contente')
         <div class="table-container">
-            <h3>{{ $evento->nome }}</h3>
+            <h1>{{ $evento->nome }}</h1>
             <p><strong>Tipo:</strong> {{ $evento->tipo }}</p>
             <p><strong>Data:</strong> {{ $evento->data }}</p>
             <p><strong>Hora:</strong> {{ $evento->hora }}</p>
@@ -16,6 +16,7 @@
             <p><strong>Estado:</strong> {{ $evento->estado }}</p>
             <p><strong>Finalidade:</strong> {{ $evento->finalidade }}</p>
             <p><strong>Tema:</strong> {{ $evento->tema }}</p>
+            <p><strong>Departamento:</strong> {{\App\Models\departamentos::find($evento->depa_id)->nome}}</p>
             <div class="modal-right-footer">
                 <a href="{{ route('evento.index') }}" class="btn btn-secondary-outline">Voltar</a>
             </div>

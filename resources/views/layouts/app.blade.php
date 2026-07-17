@@ -63,7 +63,7 @@
                      <li class="dropdown-item">
                         <button class="dropdown-btn"><i class="fas fa-calendar-alt"></i>Escola Sabatina <i class="fas fa-caret-down arrow"></i></button>
                         <ul class="dropdown-container">
-                            <li><a href=""><i class="fas fa-church"></i>Gerir</a></li>
+                            <li><a href="{{route('escola.index')}}"><i class="fas fa-church"></i>Gerir</a></li>
                             <li><a href="#"><i class="fas fa-book-open"></i>Classes</a></li>
                         </ul>
                     </li>

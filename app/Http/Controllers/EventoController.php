@@ -12,12 +12,20 @@ class EventoController extends Controller
      * Exibe a lista de todos os eventos.
      * GET /eventos
      */
-    public function index()
+    public function index(Request $request = null)
     {
-        $eventos = eventos::paginate(15);
 
-        $departamentos=departamentos::get();
-        return view('gerir.eventos', compact('eventos','departamentos'));
+        $request = $request ?: request();
+
+        $query = eventos::query();
+
+          if(filled($request->data)){
+               $query->where('data',$request->data);
+          }
+        $eventos = $query->orderby('created_at','desc')->get();
+
+        $departamentos = departamentos::get();
+        return view('gerir.eventos', compact('eventos', 'departamentos'));
     }
 
     /**
@@ -44,16 +52,15 @@ class EventoController extends Controller
             'estado' => 'required|in:Pendente,Realizado,Cancelado',
             'finalidade' => 'nullable|string|max:500',
             'tema' => 'nullable|string|max:255',
-            'depa_id'=>'required|integer'
+            'depa_id' => 'required|integer'
         ]);
-          if($depa=departamentos::find($request->depa_id)){
-       if( eventos::create($validated)){
-           alert($validated['nome'],'Evento criado com sucesso!','success');
-       }
-          }else{
-            alert($validated['nome'],'Evento não criado com sucesso, verificar departamento!','success');
-
-          }
+        if ($depa = departamentos::find($request->depa_id)) {
+            if (eventos::create($validated)) {
+                alert($validated['nome'], 'Evento criado com sucesso!', 'success');
+            }
+        } else {
+            alert($validated['nome'], 'Evento não criado com sucesso, verificar departamento!', 'success');
+        }
         return redirect()->route('evento.index');
     }
 
@@ -82,22 +89,22 @@ class EventoController extends Controller
      */
     public function update(Request $request, eventos $evento)
     {
-       // dd($request->all());
+        // dd($request->all());
         $validated = $request->validate([
             'nome' => 'required|string|max:255',
             'tipo' => 'required|string|max:100',
             'data' => 'required|date',
             'local' => 'required|string|max:255',
             'hora' => 'required|date_format:H:i',
-             'estado' => 'required|in:Pendente,Realizado,Cancelado',
+            'estado' => 'required|in:Pendente,Realizado,Cancelado',
             'finalidade' => 'nullable|string|max:500',
             'tema' => 'nullable|string|max:255',
-            'depa_id'=>'required|integer'
+            'depa_id' => 'required|integer'
         ]);
 
-           if( $evento->update($validated)){
-               alert($validated['nome'],'Evento atualizado com sucesso!','success');
-           }
+        if ($evento->update($validated)) {
+            alert($validated['nome'], 'Evento atualizado com sucesso!', 'success');
+        }
         return redirect()->route('evento.index');
     }
 
@@ -107,8 +114,8 @@ class EventoController extends Controller
      */
     public function destroy(eventos $evento)
     {
-        if($evento->delete()){
-              alert($evento['nome'],'Evento deletado com sucesso!','info');
+        if ($evento->delete()) {
+            alert($evento['nome'], 'Evento deletado com sucesso!', 'info');
         }
         return redirect()->route('evento.index');
     }
