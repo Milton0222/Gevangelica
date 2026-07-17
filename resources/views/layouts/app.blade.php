@@ -33,14 +33,14 @@
                     <li>
                         <a href="{{route('dashboard')}}" class="nav-link active"><i class="fas fa-chart-line"></i> Dashboard</a>
                     </li>
-@if(Auth::user()->isAdmin==0 && Auth::user()->isPastar==0 && Auth::user()->isMembro==0 && Auth::user()->isSecretario==0 && Auth::user()->isTesoureiro==0 && Auth::user()->isLider==0)
-                   
-    @else
-     <li class="dropdown-item">
+                    @if(Auth::user()->isAdmin==0 && Auth::user()->isPastar==0 && Auth::user()->isMembro==0 && Auth::user()->isSecretario==0 && Auth::user()->isTesoureiro==0 && Auth::user()->isLider==0)
+
+                    @else
+                    <li class="dropdown-item">
                         <button class="dropdown-btn"><i class="fas fa-users"></i> Membros <i class="fas fa-caret-down arrow"></i></button>
                         <ul class="dropdown-container">
-                            <li><a href="#"><i class="fas fa-user-plus"></i> Registar Membro</a></li>
-                            <li><a href="{{route('membro.index')}}"><i class="fas fa-search"></i> Consultar / Listar</a></li>
+                            <!-- <li><a href="#"><i class="fas fa-user-plus"></i> Registar Membro</a></li>-->
+                            <li><a href="{{route('membro.index')}}"><i class="fas fa-search"></i>Gerir</a></li>
                         </ul>
                     </li>
 
@@ -56,9 +56,22 @@
                     <li class="dropdown-item">
                         <button class="dropdown-btn"><i class="fas fa-calendar-alt"></i> Eventos <i class="fas fa-caret-down arrow"></i></button>
                         <ul class="dropdown-container">
-                            <li><a href="#"><i class="fas fa-church"></i> Cultos</a></li>
-                            <li><a href="{{route('alugueres.index')}}"><i class="fas fa-key"></i> Aluguer de Salas</a></li>
-                            <li><a href="#"><i class="fas fa-book-open"></i> Estudos Bíblicos</a></li>
+                            <li><a href="{{route('evento.index')}}"><i class="fas fa-church"></i>Gerir</a></li>
+                            <li><a href="#"><i class="fas fa-book-open"></i>Relatório</a></li>
+                        </ul>
+                    </li>
+                     <li class="dropdown-item">
+                        <button class="dropdown-btn"><i class="fas fa-calendar-alt"></i>Escola Sabatina <i class="fas fa-caret-down arrow"></i></button>
+                        <ul class="dropdown-container">
+                            <li><a href=""><i class="fas fa-church"></i>Gerir</a></li>
+                            <li><a href="#"><i class="fas fa-book-open"></i>Classes</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown-item">
+                        <button class="dropdown-btn"><i class="fas fa-calendar-alt"></i>Reservas<i class="fas fa-caret-down arrow"></i></button>
+                        <ul class="dropdown-container">
+                            <li><a href="{{route('alugueres.index')}}"><i class="fas fa-key"></i>Salas</a></li>
+
                         </ul>
                     </li>
 
@@ -72,7 +85,7 @@
                         </ul>
                     </li>
 
-    @endif
+                    @endif
                 </ul>
             </nav>
         </aside>
@@ -85,7 +98,7 @@
                     <div class="ms-3 relative">
                         <x-dropdown align="right" width="48">
                             <x-slot name="trigger">
-                               
+
                                 <span class="inline-flex rounded-md">
                                     <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
                                         {{ Auth::user()->name }}
