@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('eventos', function (Blueprint $table) {
             $table->id();
             $table->string('nome',50);
-            $table->string('tipo',20);
+            $table->enum('tipo',['Congressos','Evangelisação',
+            'Vigílias','Oração','Seminário','Programas especiais','Estudos bíblicos']);
             $table->date('data');
             $table->string('local')->nullable();
             $table->time('hora')->nullable();
