@@ -65,15 +65,16 @@ class ClasseController extends Controller
             'grupo' => 'required|string|max:100',
             'frequencia' => 'required|in:diária,semanal,mensal,trimestral',
             'evento_id' => 'required|exists:eventos,id',
-            'professor_id' => 'required|exists:users,id',
+            'professor_id' => 'required|exists:membros,id',
         ]);
+               $verificar=classes::create($validated);
 
-        if (classes::create($validated)) {
+        if($verificar){ {
             alert(Auth::user()->name, 'Classe criada com sucesso, selecione os membros !', 'success');
         }
         return redirect()->route('classe.index');
     }
-
+    }
     /**
      * Exibe os detalhes de uma classe específica.
      * GET /classes/{id}
