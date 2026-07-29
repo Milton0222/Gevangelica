@@ -18,7 +18,8 @@ class EventoController extends Controller
         $request = $request ?: request();
 
         $query = eventos::query();
-
+ 
+        
           if(filled($request->data)){
                $query->where('data',$request->data);
           }
