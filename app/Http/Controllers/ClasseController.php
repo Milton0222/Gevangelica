@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\classes;
 use App\Models\eventos;
 use App\Models\membros;
+use App\Models\membros_classes;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -77,10 +78,16 @@ class ClasseController extends Controller
      * Exibe os detalhes de uma classe específica.
      * GET /classes/{id}
      */
-    public function show(classes $classe)
+    public function show($id)
     {
-        $classe->load(['evento', 'professor', 'membros']);
-        return view('gerir.classes_show', compact('classe'));
+        $classe=classes::find($id);
+        $membros=membros::orderby('id','desc')->get();
+
+        $classe_membros=membros_classes::join('membros','membros.id','membros_classes.membro_id')
+        ->selectRaw('membros.nome,membros.data_nascimento, membros.telefone,membros.data_batismo')
+        ->where('membros_classes.classe_id',$id)->get();
+
+        return view('gerir.classes_show', compact('classe','membros','classe_membros'));
     }
 
     /**
@@ -92,6 +99,24 @@ class ClasseController extends Controller
         $eventos = eventos::all();
         $professores = User::all();
         return view('gerir.classes_edit', compact('classe', 'eventos', 'professores'));
+    }
+
+    public function add_membro(Request $request, $id){
+             $validated=$request->validate([
+                    'membro_id'=>'required|exists:membros,id'
+             ]);
+
+            $membro=membros::find($validated['membro_id']);
+            $classe=classes::find($id);
+
+          if(membros_classes::create([
+                'membro_id'=>$validated['membro_id'],
+                'classe_id'=>$id
+             ])){
+                    alert($membro['nome'],'Adicionado a classe com o grupo '.$classe['grupo'],'success');
+             }
+
+             return redirect()->route('classe.show',$id);
     }
 
     /**

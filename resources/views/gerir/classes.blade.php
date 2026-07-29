@@ -54,7 +54,7 @@
                             <td>{{ $classe->professor->name ?? 'N/A' }}</td>
                             <td class="text-center">
                                 <div class="table-actions">
-                                    <a href="{{ route('classe.show', $classe) }}" class="btn-action edit" title="Ver"><i class="fas fa-eye"></i>Membros</a>
+                                    <a href="{{ route('classe.show', $classe->id) }}" class="btn-action edit" title="Ver"><i class="fas fa-eye"></i>Membros</a>
                                     <a onclick="actualizar('{{$classe->id}}','{{$classe->grupo}}','{{$classe->frequencia}}','{{$classe->evento_id}}','{{$classe->professor_id}}')" class="btn-action edit" title="Editar"><i class="fas fa-edit"></i></a>
                                     <form action="{{ route('classe.destroy', $classe) }}" method="POST" style="display:inline;">
                                         @csrf
