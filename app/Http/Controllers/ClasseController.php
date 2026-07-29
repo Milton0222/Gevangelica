@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\classes;
 use App\Models\eventos;
+use App\Models\membros;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ClasseController extends Controller
 {
@@ -13,10 +15,32 @@ class ClasseController extends Controller
      * Exibe a lista de todas as classes.
      * GET /classes
      */
-    public function index()
+    public function index(Request $request = null)
     {
-        $classes = classes::with(['evento', 'professor'])->paginate(15);
-        return view('gerir.classes', compact('classes'));
+        $request = $request ?: request();
+
+        $query = classes::query();
+
+        if ($request->filled('grupo')) {
+            $query->where('grupo', 'LIKE', '%' . $request->grupo . '%');
+        }
+        if ($request->filled('frequencia')) {
+
+            if ($request->frequencia == 'all') {
+
+                $classes = $query->with(['evento', 'professor'])->get();
+                $eventos = eventos::all();
+                $professores = membros::whereNotNull('id')->orderby('id', 'desc')->get();
+                return view('gerir.classes', compact('classes', 'professores', 'eventos'));
+            }
+            $query->where('frequencia', $request->frequencia);
+        }
+
+        $classes = $query->with(['evento', 'professor'])->get();
+
+        $eventos = eventos::all();
+        $professores = membros::whereNotNull('id')->orderby('id', 'desc')->get();
+        return view('gerir.classes', compact('classes', 'professores', 'eventos'));
     }
 
     /**
@@ -43,8 +67,10 @@ class ClasseController extends Controller
             'professor_id' => 'required|exists:users,id',
         ]);
 
-        classes::create($validated);
-        return redirect()->route('classe.index')->with('success', 'Classe criada com sucesso!');
+        if (classes::create($validated)) {
+            alert(Auth::user()->name, 'Classe criada com sucesso, selecione os membros !', 'success');
+        }
+        return redirect()->route('classe.index');
     }
 
     /**
@@ -72,7 +98,7 @@ class ClasseController extends Controller
      * Atualiza uma classe no banco de dados.
      * PUT /classes/{id}
      */
-    public function update(Request $request, classes $classe)
+    public function update(Request $request, $id)
     {
         $validated = $request->validate([
             'grupo' => 'required|string|max:100',
@@ -81,17 +107,24 @@ class ClasseController extends Controller
             'professor_id' => 'required|exists:users,id',
         ]);
 
-        $classe->update($validated);
-        return redirect()->route('classe.index')->with('success', 'Classe atualizada com sucesso!');
+        $classe = classes::find($id);
+        if ($classe->update($validated)) {
+            alert(Auth::user()->name, 'Classe atualizada com sucesso!', 'success');
+        }
+        return redirect()->route('classe.index');
     }
 
     /**
      * Remove uma classe do banco de dados.
      * DELETE /classes/{id}
      */
-    public function destroy(classes $classe)
+    public function destroy($id)
     {
-        $classe->delete();
-        return redirect()->route('classe.index')->with('success', 'Classe deletada com sucesso!');
+        $classe = classes::find($id);
+
+        if ($classe->delete()) {
+            alert(Auth::user()->name, 'Classe deletada com sucesso!', 'success');
+        }
+        return redirect()->route('classe.index');
     }
 }
