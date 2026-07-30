@@ -26,7 +26,11 @@
             <a href="#localizacao">Contacto</a>
         </nav>
         <div class="nav-actions">
+            @if(Auth::user())
+              <a href="{{route('dashboard')}}" class="btn btn-login">{{Auth::user()->name}}</a>
+            @else
             <button class="btn btn-login" id="btnAbrirLogin"><i class="fas fa-sign-in-alt"></i> Entrar</button>
+            @endif
         </div>
         <div class="menu-toggle" id="mobile-menu"><i class="fas fa-bars"></i></div>
     </header>
@@ -93,36 +97,33 @@
                 <thead>
                     <tr>
                         <th>Atividade / Evento</th>
+                        <th>Data</th>
                         <th>Dia da Semana</th>
                         <th>Horário</th>
                         <th>Localização</th>
+                        <th>Departamento</th>
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach($eventos as $evento)
                     <tr>
-                        <td><strong>Culto de Celebração e Adoração</strong></td>
-                        <td>Domingo</td>
-                        <td>09:00h - 11:30h</td>
-                        <td>Nave Principal</td>
+                        <td><strong>{{$evento->nome}}</strong></td>
+                        <td>{{$evento->data}}</td>
+                        <td>
+                            @php 
+                              setlocale(LC_TIME,'pt_BR','pt_BR.utf-8','portuguese');
+                                    $data=new datetime($evento->data);
+                                    $dia= strftime('%A',$data->getTimestamp()); 
+                                   
+                            @endphp
+                            {{$dia}}
+
+                        </td>
+                        <td>{{$evento->hora}}</td>
+                        <td>{{$evento->local}}</td>
+                        <td>{{$evento->departamento->nome}}</td>
                     </tr>
-                    <tr>
-                        <td>Estudo Bíblico Coletivo</td>
-                        <td>Terça-Feira</td>
-                        <td>18:30h - 20:00h</td>
-                        <td>Sala Polivalente</td>
-                    </tr>
-                    <tr>
-                        <td>Reunião de Oração e Intercessão</td>
-                        <td>Sexta-Feira</td>
-                        <td>18:00h - 19:30h</td>
-                        <td>Capela Menor</td>
-                    </tr>
-                    <tr>
-                        <td>Encontro Geral de Jovens</td>
-                        <td>Sábado</td>
-                        <td>16:00h - 18:00h</td>
-                        <td>Auditório Superior</td>
-                    </tr>
+                   @endforeach
                 </tbody>
             </table>
         </div>

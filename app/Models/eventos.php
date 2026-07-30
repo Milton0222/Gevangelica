@@ -17,7 +17,8 @@ class eventos extends Model
         'hora',
         'estado',
         'finalidade',
-        'tema'
+        'tema',
+        'depa_id'
     ];
 
     /**
@@ -28,5 +29,9 @@ class eventos extends Model
     public function classes()
     {
         return $this->hasMany(classes::class, 'evento_id');
+    }
+
+    public function departamento(){
+        return $this->belongsTo(departamentos::class,'depa_id');
     }
 }

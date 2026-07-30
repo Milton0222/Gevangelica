@@ -25,7 +25,10 @@
     <div class="wrapper">
         <aside class="sidebar">
             <div class="sidebar-header">
-                <h2>Igreja Gestão</h2>
+                <a href="/">
+                      <h2>GestãoEvagélica</h2>
+                </a>
+              
             </div>
 
             <nav class="sidebar-nav">

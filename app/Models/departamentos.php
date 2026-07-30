@@ -36,5 +36,8 @@ class departamentos extends Model
             ->withTimestamps();
     }
 
+    public function eventos(){
+        return $this->hasMany(eventos::class);
+    }
     
 }

@@ -23,10 +23,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    alert()->success('Welcome to the application!');
-    return view('welcome');
-});
+Route::get('/', [Controller::class, 'welcome']);
 
 Route::middleware([
     'auth:sanctum',

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\eventos;
 use App\Models\membros;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -28,5 +29,13 @@ class Controller extends BaseController
     $m=membros::where('genero','M')->count();
 
        return view('dashboard', compact('membros_c','membros_a','f','m'));
+    }
+
+
+    public function welcome(){
+
+            $eventos=eventos::get();
+            // $data->format('l'); formatra data para exibir o dia da semana.
+      return view('welcome', compact('eventos'));
     }
 }
