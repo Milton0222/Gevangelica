@@ -51,7 +51,7 @@
                             <td><strong>{{ $classe->grupo }}</strong></td>
                             <td>{{ $classe->frequencia }}</td>
                             <td>{{ $classe->evento->nome ?? 'N/A' }}</td>
-                            <td>{{ $classe->professor->name ?? 'N/A' }}</td>
+                            <td>{{ $classe->professor->nome ?? 'N/A' }}</td>
                             <td class="text-center">
                                 <div class="table-actions">
                                     <a href="{{ route('classe.show', $classe->id) }}" class="btn-action edit" title="Ver membros"><i class="fas fa-eye"></i></a>

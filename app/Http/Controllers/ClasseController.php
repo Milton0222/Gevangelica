@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\classe_presencas;
 use App\Models\classes;
 use App\Models\eventos;
 use App\Models\membros;
 use App\Models\membros_classes;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ClasseController extends Controller
 {
@@ -85,10 +88,16 @@ class ClasseController extends Controller
         $membros=membros::orderby('id','desc')->get();
 
         $classe_membros=membros_classes::join('membros','membros.id','membros_classes.membro_id')
-        ->selectRaw('membros.nome,membros.data_nascimento, membros.telefone,membros.data_batismo')
+        ->selectRaw('membros.id,membros.nome,membros.data_nascimento, membros.telefone,membros.data_batismo')
         ->where('membros_classes.classe_id',$id)->get();
 
-        return view('gerir.classes_show', compact('classe','membros','classe_membros'));
+         $presencas=classe_presencas::leftjoin('membros','membros.id','classe_presencas.membro_id')
+                        ->join('classes','classes.id','classe_presencas.classe_id')
+                        ->select('membros.nome as membro',DB::raw("count(if(classe_presencas.tipo='P',1,null)) as presencas"),DB::raw("count(if(classe_presencas.tipo='F',1,null)) as faltas"))
+                        ->where('classes.id',$id)
+                        ->groupBy('membros.nome')->get();
+
+        return view('gerir.classes_show', compact('classe','membros','classe_membros','presencas'));
     }
 
     /**
@@ -152,5 +161,37 @@ class ClasseController extends Controller
             alert(Auth::user()->name, 'Classe deletada com sucesso!', 'success');
         }
         return redirect()->route('classe.index');
+    }
+
+    //registar presencas
+
+    public function classe_presenca(Request $request){
+
+      $validated=$request->validate([
+                'classe_id'=>'required|exists:classes,id',
+                'presenca'=>'required|array',
+                'presenca.*'=>'in:P,F'
+            ]);
+
+            $agora=Carbon::now();
+            $dados=[];
+
+            foreach($validated['presenca'] as $membroId => $estado){
+                $dados[]=[
+                    'classe_id'=>$validated['classe_id'],
+                    'membro_id'=>$membroId,
+                    'tipo'=>$estado,
+                    'created_at'=>$agora,
+                    'updated_at'=>$agora
+                ];
+            }
+//dd($dados);
+            if(!empty($dados)){
+                DB::table('classe_presencas')->insert($dados);
+
+                alert(Auth::user()->name,'Presença diaria registada.','info');
+            }
+            return redirect()->route('classe.show',$validated['classe_id']);
+           
     }
 }

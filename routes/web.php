@@ -82,6 +82,7 @@ Route::middleware([
     ]);
 
     Route::post('/classe/membro/{id}',[ClasseController::class,'add_membro'])->name('classe.membro');
+    Route::post('/classe/presenças',[ClasseController::class,'classe_presenca'])->name('classe.presenca');
 
     // ===========================
     // ROTAS DE DEPARTAMENTOS

@@ -27,7 +27,7 @@ class membros extends Model
      * Motivo: Cada membro pode ter um login no sistema através de um usuário autenticado.
      * Estabelece a relação entre os dados do membro e sua conta de acesso.
      */
-    public function user()
+    public function profes()
     {
         return $this->belongsTo(User::class);
     }
@@ -49,7 +49,7 @@ class membros extends Model
      */
     public function classes()
     {
-        return $this->belongsToMany(classes::class, 'membros_classes', 'membro_id', 'classe_id');
+        return $this->belongsToMany(classes::class, 'professor_id');
     }
 
      /**
