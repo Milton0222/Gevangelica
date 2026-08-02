@@ -38,8 +38,9 @@
                     </li>
                     @if(Auth::user()->isAdmin==0 && Auth::user()->isPastar==0 && Auth::user()->isMembro==0 && Auth::user()->isSecretario==0 && Auth::user()->isTesoureiro==0 && Auth::user()->isLider==0)
 
-                    @else
-                    <li class="dropdown-item">
+                    @elseif(Auth::user()->isAdmin==1 && Auth::user()->isPastar==1)
+
+                     <li class="dropdown-item">
                         <button class="dropdown-btn"><i class="fas fa-users"></i> Membros <i class="fas fa-caret-down arrow"></i></button>
                         <ul class="dropdown-container">
                             <!-- <li><a href="#"><i class="fas fa-user-plus"></i> Registar Membro</a></li>-->
@@ -88,7 +89,45 @@
                         </ul>
                     </li>
 
+                    @elseif(Auth::user()->isLider==1)
+
+                    <li class="dropdown-item">
+                        <button class="dropdown-btn"><i class="fas fa-calendar-alt"></i> Eventos <i class="fas fa-caret-down arrow"></i></button>
+                        <ul class="dropdown-container">
+                            <li><a href="{{route('evento.index')}}"><i class="fas fa-church"></i>Gerir</a></li>
+                            <li><a href="#"><i class="fas fa-book-open"></i>Relatório</a></li>
+                        </ul>
+                    </li>
+                     <li class="dropdown-item">
+                        <button class="dropdown-btn"><i class="fas fa-calendar-alt"></i>Escola Sabatina <i class="fas fa-caret-down arrow"></i></button>
+                        <ul class="dropdown-container">
+                           <!-- <li><a href="{{route('escola.index')}}"><i class="fas fa-church"></i>Gerir</a></li>-->
+                            <li><a href="{{route('classe.index')}}"><i class="fas fa-book-open"></i>Classes</a></li>
+                        </ul>
+                    </li>
+
+                    @elseif(Auth::user()->isSecretario==1)
+                     <li class="dropdown-item">
+                        <button class="dropdown-btn"><i class="fas fa-users"></i> Membros <i class="fas fa-caret-down arrow"></i></button>
+                        <ul class="dropdown-container">
+                            <!-- <li><a href="#"><i class="fas fa-user-plus"></i> Registar Membro</a></li>-->
+                            <li><a href="{{route('membro.index')}}"><i class="fas fa-search"></i>Gerir</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown-item">
+                        <button class="dropdown-btn"><i class="fas fa-hand-holding-usd"></i> Finanças <i class="fas fa-caret-down arrow"></i></button>
+                        <ul class="dropdown-container">
+                            <li><a href="{{route('contribuicao.index')}}"><i class="fas fa-coins"></i>Contribuições</a></li>
+                            <!--<li><a href="#"><i class="fas fa-heart"></i> Ofertas</a></li>-->
+                            <li><a href="#"><i class="fas fa-file-invoice-dollar"></i> Relatórios</a></li>
+                        </ul>
+                    </li>
+
                     @endif
+                   
+
+                    
                 </ul>
             </nav>
         </aside>
