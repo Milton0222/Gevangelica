@@ -84,7 +84,7 @@ class userController extends Controller
 
         //  dd($request->all());
 
-        if ($request->isPastar == 'on') {
+        if ($request->isAdmin == 'on') {
 
             User::create([
                 'name' => $validated['name'],
@@ -93,7 +93,7 @@ class userController extends Controller
                 'isPastar' => 1,
                 'isAdmin' => 1
             ]);
-            alert($validated['name'], 'Usuário criado com sucesso como Pastor!', 'success');
+            alert($validated['name'], 'Usuário criado com sucesso como Administrador!', 'success');
         } elseif ($request->isSecretario == 'on') {
             User::create([
                 'name' => $validated['name'],

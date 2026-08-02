@@ -146,6 +146,7 @@
                     <label for="">Lider</label>
                     <input type="checkbox" name="isLider" id="">
                 </div>
+                <!--
                 <div class="from-group">
                     <label for="">Pastor</label>
                     <input type="checkbox" name="isPastar" id="">
@@ -153,10 +154,10 @@
                 <div class="from-group">
                     <label for="">Membro</label>
                     <input type="checkbox" name="isMembro" id="">
-                </div>
+                </div>-->
                 <div class="from-group">
-                    <label for="">Tesoureiro</label>
-                    <input type="checkbox" name="isTesoureiro" id="">
+                    <label for="">admin</label>
+                    <input type="checkbox" name="isAdmin" id="">
                 </div>
                 <div class="from-group">
                     <label for="">Secretario(a)</label>
