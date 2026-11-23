@@ -19,6 +19,11 @@ class admin extends Seeder
             'name'=>'Weza Celsio',
             'email'=>'kizalusoft@gmail.com',
             'isAdmin'=>1,
+            'isPastar'=>1,
+            'isSecretario'=>1,
+            'isTesoureiro'=>1,
+            'isMembro'=>1,
+            'isLider'=>1,
             'password'=>bcrypt(123456789)
         ]);
     }

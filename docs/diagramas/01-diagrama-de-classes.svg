@@ -1,0 +1,181 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1450" viewBox="0 0 1600 1450" role="img" aria-labelledby="title desc">
+  <title id="title">Diagrama de Classes do EcclesiaDigital</title>
+  <desc id="desc">Diagrama de classes das principais entidades do sistema e respetivas associações.</desc>
+  <defs>
+    <style>
+      text { font-family: Inter, "Segoe UI", Arial, sans-serif; }
+      .page { fill: #f3f6fb; }
+      .title { fill: #14213d; font-size: 34px; font-weight: 750; }
+      .subtitle { fill: #64748b; font-size: 16px; }
+      .card { fill: #ffffff; stroke: #d7e0ed; stroke-width: 1.5; }
+      .head { fill: #172b4d; }
+      .class-name { fill: #ffffff; font-size: 21px; font-weight: 700; }
+      .stereotype { fill: #9dc5ff; font-size: 12px; font-weight: 700; letter-spacing: 1.2px; }
+      .attr { fill: #25344d; font-family: Consolas, "Courier New", monospace; font-size: 15px; }
+      .panel { fill: #ffffff; stroke: #d7e0ed; stroke-width: 1.5; }
+      .panel-title { fill: #172b4d; font-size: 19px; font-weight: 700; }
+      .relation { fill: #334155; font-size: 15px; }
+      .note { fill: #64748b; font-size: 13px; }
+      .dot { fill: #2f80ed; }
+      .edge { fill: none; stroke: #5aa0b1; stroke-width: 2.5; marker-end: url(#arrow); }
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#5aa0b1"/>
+    </marker>
+  </defs>
+  <rect class="page" width="1600" height="1450"/>
+  <text class="title" x="80" y="70">Diagrama de Classes</text>
+  <text class="subtitle" x="80" y="104">EcclesiaDigital · classes de domínio e associações principais</text>
+
+  <g>
+    <path class="edge" d="M520 260 H580"/>
+    <path class="edge" d="M1020 260 H1080"/>
+    <path class="edge" d="M300 370 V420"/>
+    <path class="edge" d="M580 330 H545 V530 H520"/>
+    <path class="edge" d="M760 370 V420"/>
+    <path class="edge" d="M850 370 V420"/>
+    <path class="edge" d="M1300 370 V420"/>
+    <path class="edge" d="M1080 530 H1020"/>
+    <path class="edge" d="M800 640 V690"/>
+    <path class="edge" d="M1020 300 H1045 V800 H1020"/>
+    <path class="edge" d="M80 240 H55 V800 H80"/>
+    <path class="edge" d="M520 800 H545 V930 H1100 V910"/>
+    <path class="edge" d="M1520 220 H1545 V930 H1300 V910"/>
+  </g>
+
+  <g transform="translate(80 150)">
+    <rect class="card" width="440" height="220" rx="14"/>
+    <path class="head" d="M14 0h412a14 14 0 0 1 14 14v56H0V14A14 14 0 0 1 14 0z"/>
+    <text class="stereotype" x="22" y="25">&lt;&lt;ENTIDADE&gt;&gt;</text>
+    <text class="class-name" x="22" y="54">Utilizador</text>
+    <text class="attr" x="22" y="100">+ id: bigint</text>
+    <text class="attr" x="22" y="126">+ nome: string</text>
+    <text class="attr" x="22" y="152">+ email: string</text>
+    <text class="attr" x="22" y="178">+ password: string</text>
+    <text class="attr" x="22" y="204">+ perfis: boolean[]</text>
+  </g>
+
+  <g transform="translate(580 150)">
+    <rect class="card" width="440" height="220" rx="14"/>
+    <path class="head" d="M14 0h412a14 14 0 0 1 14 14v56H0V14A14 14 0 0 1 14 0z"/>
+    <text class="stereotype" x="22" y="25">&lt;&lt;ENTIDADE&gt;&gt;</text>
+    <text class="class-name" x="22" y="54">Membro</text>
+    <text class="attr" x="22" y="100">+ id: bigint</text>
+    <text class="attr" x="22" y="126">+ nome: string</text>
+    <text class="attr" x="22" y="152">+ data_nascimento: date</text>
+    <text class="attr" x="22" y="178">+ situacao: enum</text>
+    <text class="attr" x="22" y="204">+ user_id: bigint</text>
+  </g>
+
+  <g transform="translate(1080 150)">
+    <rect class="card" width="440" height="220" rx="14"/>
+    <path class="head" d="M14 0h412a14 14 0 0 1 14 14v56H0V14A14 14 0 0 1 14 0z"/>
+    <text class="stereotype" x="22" y="25">&lt;&lt;ENTIDADE&gt;&gt;</text>
+    <text class="class-name" x="22" y="54">Departamento</text>
+    <text class="attr" x="22" y="100">+ id: bigint</text>
+    <text class="attr" x="22" y="126">+ nome: string</text>
+    <text class="attr" x="22" y="152">+ lider_id: bigint</text>
+    <text class="attr" x="22" y="178">+ created_at: timestamp</text>
+  </g>
+
+  <g transform="translate(80 420)">
+    <rect class="card" width="440" height="220" rx="14"/>
+    <path class="head" d="M14 0h412a14 14 0 0 1 14 14v56H0V14A14 14 0 0 1 14 0z"/>
+    <text class="stereotype" x="22" y="25">&lt;&lt;ENTIDADE&gt;&gt;</text>
+    <text class="class-name" x="22" y="54">Contribuicao</text>
+    <text class="attr" x="22" y="100">+ id: bigint</text>
+    <text class="attr" x="22" y="126">+ tipo: enum</text>
+    <text class="attr" x="22" y="152">+ valor: decimal(8,2)</text>
+    <text class="attr" x="22" y="178">+ membro_id: bigint</text>
+    <text class="attr" x="22" y="204">+ user_id: bigint</text>
+  </g>
+
+  <g transform="translate(580 420)">
+    <rect class="card" width="440" height="220" rx="14"/>
+    <path class="head" d="M14 0h412a14 14 0 0 1 14 14v56H0V14A14 14 0 0 1 14 0z"/>
+    <text class="stereotype" x="22" y="25">&lt;&lt;ENTIDADE&gt;&gt;</text>
+    <text class="class-name" x="22" y="54">Classe</text>
+    <text class="attr" x="22" y="100">+ id: bigint</text>
+    <text class="attr" x="22" y="126">+ grupo: string</text>
+    <text class="attr" x="22" y="152">+ frequencia: string</text>
+    <text class="attr" x="22" y="178">+ evento_id: bigint</text>
+    <text class="attr" x="22" y="204">+ professor_id: bigint</text>
+  </g>
+
+  <g transform="translate(1080 420)">
+    <rect class="card" width="440" height="220" rx="14"/>
+    <path class="head" d="M14 0h412a14 14 0 0 1 14 14v56H0V14A14 14 0 0 1 14 0z"/>
+    <text class="stereotype" x="22" y="25">&lt;&lt;ENTIDADE&gt;&gt;</text>
+    <text class="class-name" x="22" y="54">Evento</text>
+    <text class="attr" x="22" y="100">+ id: bigint</text>
+    <text class="attr" x="22" y="126">+ nome: string</text>
+    <text class="attr" x="22" y="152">+ data: date</text>
+    <text class="attr" x="22" y="178">+ estado: enum</text>
+    <text class="attr" x="22" y="204">+ depa_id: bigint?</text>
+  </g>
+
+  <g transform="translate(80 690)">
+    <rect class="card" width="440" height="220" rx="14"/>
+    <path class="head" d="M14 0h412a14 14 0 0 1 14 14v56H0V14A14 14 0 0 1 14 0z"/>
+    <text class="stereotype" x="22" y="25">&lt;&lt;ENTIDADE&gt;&gt;</text>
+    <text class="class-name" x="22" y="54">Sala</text>
+    <text class="attr" x="22" y="100">+ id: bigint</text>
+    <text class="attr" x="22" y="126">+ n_sala: integer</text>
+    <text class="attr" x="22" y="152">+ estado: enum</text>
+    <text class="attr" x="22" y="178">+ user_id: bigint</text>
+  </g>
+
+  <g transform="translate(580 690)">
+    <rect class="card" width="440" height="220" rx="14"/>
+    <path class="head" d="M14 0h412a14 14 0 0 1 14 14v56H0V14A14 14 0 0 1 14 0z"/>
+    <text class="stereotype" x="22" y="25">&lt;&lt;ENTIDADE&gt;&gt;</text>
+    <text class="class-name" x="22" y="54">PresencaClasse</text>
+    <text class="attr" x="22" y="100">+ id: bigint</text>
+    <text class="attr" x="22" y="126">+ tipo: enum (P/F)</text>
+    <text class="attr" x="22" y="152">+ classe_id: bigint</text>
+    <text class="attr" x="22" y="178">+ membro_id: bigint</text>
+  </g>
+
+  <g transform="translate(1080 690)">
+    <rect class="card" width="440" height="220" rx="14"/>
+    <path class="head" d="M14 0h412a14 14 0 0 1 14 14v56H0V14A14 14 0 0 1 14 0z"/>
+    <text class="stereotype" x="22" y="25">&lt;&lt;CLASSE DE ASSOCIAÇÃO&gt;&gt;</text>
+    <text class="class-name" x="22" y="54">ReservaSala</text>
+    <text class="attr" x="22" y="100">+ sala_id: bigint</text>
+    <text class="attr" x="22" y="126">+ depa_id: bigint</text>
+    <text class="attr" x="22" y="152">+ data: date</text>
+    <text class="attr" x="22" y="178">+ hora_inicio / hora_fim: time</text>
+    <text class="attr" x="22" y="204">+ finalidade: text?</text>
+  </g>
+
+  <rect class="panel" x="80" y="960" width="1440" height="410" rx="16"/>
+  <text class="panel-title" x="112" y="1002">Associações e multiplicidades</text>
+
+  <circle class="dot" cx="118" cy="1043" r="4"/>
+  <text class="relation" x="134" y="1049">Utilizador 1 — 0..N Membro</text>
+  <circle class="dot" cx="118" cy="1083" r="4"/>
+  <text class="relation" x="134" y="1089">Utilizador 1 — 0..N Contribuição e Sala</text>
+  <circle class="dot" cx="118" cy="1123" r="4"/>
+  <text class="relation" x="134" y="1129">Membro 1 — 0..N Contribuição</text>
+  <circle class="dot" cx="118" cy="1163" r="4"/>
+  <text class="relation" x="134" y="1169">Membro 1 — 0..N Departamento (como líder)</text>
+  <circle class="dot" cx="118" cy="1203" r="4"/>
+  <text class="relation" x="134" y="1209">Membro 1 — 0..N Classe (como professor)</text>
+  <circle class="dot" cx="118" cy="1243" r="4"/>
+  <text class="relation" x="134" y="1249">Membro 0..N — 0..N Classe (inscrição)</text>
+
+  <circle class="dot" cx="820" cy="1043" r="4"/>
+  <text class="relation" x="836" y="1049">Departamento 0..N — 0..1 Evento</text>
+  <circle class="dot" cx="820" cy="1083" r="4"/>
+  <text class="relation" x="836" y="1089">Evento 1 — 0..N Classe</text>
+  <circle class="dot" cx="820" cy="1123" r="4"/>
+  <text class="relation" x="836" y="1129">Membro 1 — 0..N Presença; Classe 1 — 0..N Presença</text>
+  <circle class="dot" cx="820" cy="1163" r="4"/>
+  <text class="relation" x="836" y="1169">Sala 0..N — 0..N Departamento (reservas)</text>
+  <circle class="dot" cx="820" cy="1203" r="4"/>
+  <text class="relation" x="836" y="1209">Inscrição implementada por membros_classes</text>
+  <circle class="dot" cx="820" cy="1243" r="4"/>
+  <text class="relation" x="836" y="1249">Reserva implementada por salas_departamentos</text>
+
+  <text class="note" x="112" y="1324">Multiplicidades baseadas nas chaves estrangeiras das migrações. A relação Utilizador–Membro segue a estrutura da base de dados.</text>
+</svg>

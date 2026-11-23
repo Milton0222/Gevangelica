@@ -1,0 +1,190 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2600" height="1740" viewBox="0 0 2600 1740" role="img" aria-labelledby="title desc">
+  <title id="title">Modelo Físico da Base de Dados do EcclesiaDigital</title>
+  <desc id="desc">Modelo físico com tabelas de negócio, tipos de dados, chaves primárias, chaves estrangeiras e restrições principais.</desc>
+  <defs>
+    <style>
+      text { font-family: Inter, "Segoe UI", Arial, sans-serif; }
+      .page { fill: #f3f6fb; }
+      .title { fill: #14213d; font-size: 34px; font-weight: 750; }
+      .subtitle { fill: #64748b; font-size: 16px; }
+      .card { fill: #ffffff; stroke: #d7e0ed; stroke-width: 1.5; }
+      .head { fill: #172b4d; }
+      .table-name { fill: #ffffff; font-size: 20px; font-weight: 700; }
+      .field { fill: #25344d; font-family: Consolas, "Courier New", monospace; font-size: 14px; }
+      .key { fill: #0e7490; font-family: Consolas, "Courier New", monospace; font-size: 14px; font-weight: 700; }
+      .note-card { fill: #e8f1fb; stroke: #c4d7ed; stroke-width: 1.2; }
+      .note-title { fill: #17365d; font-size: 16px; font-weight: 700; }
+      .note { fill: #40536d; font-size: 14px; }
+      .legend { fill: #0e7490; font-family: Consolas, "Courier New", monospace; font-size: 14px; font-weight: 700; }
+    </style>
+  </defs>
+  <rect class="page" width="2600" height="1740"/>
+  <text class="title" x="48" y="62">Modelo Físico da Base de Dados</text>
+  <text class="subtitle" x="48" y="96">EcclesiaDigital · tabelas de negócio conforme as migrações Laravel · tipos apresentados em notação SQL</text>
+
+  <g transform="translate(40 130)">
+    <rect class="card" width="600" height="590" rx="12"/>
+    <path class="head" d="M12 0h576a12 12 0 0 1 12 12v48H0V12A12 12 0 0 1 12 0z"/>
+    <text class="table-name" x="20" y="38">users</text>
+    <text class="key" x="20" y="88">PK id BIGINT UNSIGNED AUTO_INCREMENT</text>
+    <text class="field" x="20" y="112">name VARCHAR(255) NOT NULL</text>
+    <text class="key" x="20" y="136">UQ email VARCHAR(255) NOT NULL</text>
+    <text class="field" x="20" y="160">isPastar BOOLEAN DEFAULT 0</text>
+    <text class="field" x="20" y="184">isAdmin BOOLEAN DEFAULT 0</text>
+    <text class="field" x="20" y="208">isSecretario BOOLEAN DEFAULT 0</text>
+    <text class="field" x="20" y="232">isTesoureiro BOOLEAN DEFAULT 0</text>
+    <text class="field" x="20" y="256">isLider BOOLEAN DEFAULT 0</text>
+    <text class="field" x="20" y="280">isMembro BOOLEAN DEFAULT 0</text>
+    <text class="field" x="20" y="304">email_verified_at TIMESTAMP NULL</text>
+    <text class="field" x="20" y="328">password VARCHAR(255) NOT NULL</text>
+    <text class="field" x="20" y="352">remember_token VARCHAR(100) NULL</text>
+    <text class="field" x="20" y="376">current_team_id BIGINT UNSIGNED NULL</text>
+    <text class="field" x="20" y="400">profile_photo_path VARCHAR(2048) NULL</text>
+    <text class="field" x="20" y="424">two_factor_secret TEXT NULL</text>
+    <text class="field" x="20" y="448">two_factor_recovery_codes TEXT NULL</text>
+    <text class="field" x="20" y="472">two_factor_confirmed_at TIMESTAMP NULL</text>
+    <text class="field" x="20" y="496">created_at TIMESTAMP NULL</text>
+    <text class="field" x="20" y="520">updated_at TIMESTAMP NULL</text>
+  </g>
+
+  <g transform="translate(670 130)">
+    <rect class="card" width="600" height="480" rx="12"/>
+    <path class="head" d="M12 0h576a12 12 0 0 1 12 12v48H0V12A12 12 0 0 1 12 0z"/>
+    <text class="table-name" x="20" y="38">membros</text>
+    <text class="key" x="20" y="88">PK id BIGINT UNSIGNED AUTO_INCREMENT</text>
+    <text class="field" x="20" y="112">nome VARCHAR(50) NOT NULL</text>
+    <text class="field" x="20" y="136">morada VARCHAR(50) NULL</text>
+    <text class="key" x="20" y="160">UQ telefone VARCHAR(9) NOT NULL</text>
+    <text class="field" x="20" y="184">estado_civil ENUM(Casado, Solteiro, Viuvo, Divorciado)</text>
+    <text class="field" x="20" y="208">genero ENUM(M, F) NOT NULL</text>
+    <text class="field" x="20" y="232">data_nascimento DATE NOT NULL</text>
+    <text class="field" x="20" y="256">data_batismo DATE NULL</text>
+    <text class="field" x="20" y="280">situacao ENUM(Transferido, Inativo, Activo)</text>
+    <text class="field" x="20" y="304">cargo VARCHAR(50) NULL</text>
+    <text class="key" x="20" y="328">UQ email VARCHAR(255) NOT NULL</text>
+    <text class="key" x="20" y="352">FK user_id BIGINT UNSIGNED → users.id</text>
+    <text class="field" x="20" y="376">created_at TIMESTAMP NULL</text>
+    <text class="field" x="20" y="400">updated_at TIMESTAMP NULL</text>
+  </g>
+
+  <g transform="translate(1300 130)">
+    <rect class="card" width="600" height="260" rx="12"/>
+    <path class="head" d="M12 0h576a12 12 0 0 1 12 12v48H0V12A12 12 0 0 1 12 0z"/>
+    <text class="table-name" x="20" y="38">departamentos</text>
+    <text class="key" x="20" y="88">PK id BIGINT UNSIGNED AUTO_INCREMENT</text>
+    <text class="field" x="20" y="112">nome VARCHAR(255) NOT NULL</text>
+    <text class="key" x="20" y="136">FK lider_id BIGINT UNSIGNED → membros.id</text>
+    <text class="field" x="20" y="160">created_at TIMESTAMP NULL</text>
+    <text class="field" x="20" y="184">updated_at TIMESTAMP NULL</text>
+  </g>
+
+  <g transform="translate(1930 130)">
+    <rect class="card" width="600" height="260" rx="12"/>
+    <path class="head" d="M12 0h576a12 12 0 0 1 12 12v48H0V12A12 12 0 0 1 12 0z"/>
+    <text class="table-name" x="20" y="38">salas</text>
+    <text class="key" x="20" y="88">PK id BIGINT UNSIGNED AUTO_INCREMENT</text>
+    <text class="field" x="20" y="112">n_sala INT NOT NULL</text>
+    <text class="field" x="20" y="136">estado ENUM(Reservado, Livre, Pendente)</text>
+    <text class="key" x="20" y="160">FK user_id BIGINT UNSIGNED → users.id</text>
+    <text class="field" x="20" y="184">created_at TIMESTAMP NULL</text>
+    <text class="field" x="20" y="208">updated_at TIMESTAMP NULL</text>
+  </g>
+
+  <g transform="translate(40 760)">
+    <rect class="card" width="600" height="330" rx="12"/>
+    <path class="head" d="M12 0h576a12 12 0 0 1 12 12v48H0V12A12 12 0 0 1 12 0z"/>
+    <text class="table-name" x="20" y="38">contribuicoes</text>
+    <text class="key" x="20" y="88">PK id BIGINT UNSIGNED AUTO_INCREMENT</text>
+    <text class="field" x="20" y="112">tipo ENUM(Dizimo, Oferta) NOT NULL</text>
+    <text class="field" x="20" y="136">valor DECIMAL(8,2) DEFAULT 0</text>
+    <text class="field" x="20" y="160">obs TEXT NULL</text>
+    <text class="key" x="20" y="184">FK membro_id BIGINT UNSIGNED → membros.id</text>
+    <text class="key" x="20" y="208">FK user_id BIGINT UNSIGNED → users.id</text>
+    <text class="field" x="20" y="232">created_at TIMESTAMP NULL</text>
+    <text class="field" x="20" y="256">updated_at TIMESTAMP NULL</text>
+  </g>
+
+  <g transform="translate(670 670)">
+    <rect class="card" width="600" height="440" rx="12"/>
+    <path class="head" d="M12 0h576a12 12 0 0 1 12 12v48H0V12A12 12 0 0 1 12 0z"/>
+    <text class="table-name" x="20" y="38">eventos</text>
+    <text class="key" x="20" y="88">PK id BIGINT UNSIGNED AUTO_INCREMENT</text>
+    <text class="field" x="20" y="112">nome VARCHAR(50) NOT NULL</text>
+    <text class="field" x="20" y="136">tipo ENUM(7 categorias) NOT NULL</text>
+    <text class="note" x="38" y="157">Congressos, Evangelisação, Vigílias, Oração, Seminário,</text>
+    <text class="note" x="38" y="176">Programas especiais, Estudos bíblicos</text>
+    <text class="field" x="20" y="202">data DATE NOT NULL</text>
+    <text class="field" x="20" y="226">local VARCHAR(255) NULL</text>
+    <text class="field" x="20" y="250">hora TIME NULL</text>
+    <text class="field" x="20" y="274">estado ENUM(Pendente, Realizado, Cancelado)</text>
+    <text class="field" x="20" y="298">finalidade TEXT NULL</text>
+    <text class="field" x="20" y="322">tema VARCHAR(50) NULL</text>
+    <text class="key" x="20" y="346">FK depa_id BIGINT UNSIGNED NULL → departamentos.id</text>
+    <text class="field" x="20" y="370">created_at TIMESTAMP NULL</text>
+    <text class="field" x="20" y="394">updated_at TIMESTAMP NULL</text>
+  </g>
+
+  <g transform="translate(1300 460)">
+    <rect class="card" width="600" height="310" rx="12"/>
+    <path class="head" d="M12 0h576a12 12 0 0 1 12 12v48H0V12A12 12 0 0 1 12 0z"/>
+    <text class="table-name" x="20" y="38">classes</text>
+    <text class="key" x="20" y="88">PK id BIGINT UNSIGNED AUTO_INCREMENT</text>
+    <text class="field" x="20" y="112">grupo VARCHAR(255) NOT NULL</text>
+    <text class="field" x="20" y="136">frequencia VARCHAR(255) NOT NULL</text>
+    <text class="key" x="20" y="160">FK evento_id BIGINT UNSIGNED → eventos.id</text>
+    <text class="key" x="20" y="184">FK professor_id BIGINT UNSIGNED → membros.id</text>
+    <text class="field" x="20" y="208">created_at TIMESTAMP NULL</text>
+    <text class="field" x="20" y="232">updated_at TIMESTAMP NULL</text>
+  </g>
+
+  <g transform="translate(1930 460)">
+    <rect class="card" width="600" height="350" rx="12"/>
+    <path class="head" d="M12 0h576a12 12 0 0 1 12 12v48H0V12A12 12 0 0 1 12 0z"/>
+    <text class="table-name" x="20" y="38">salas_departamentos</text>
+    <text class="key" x="20" y="88">PK, FK sala_id BIGINT UNSIGNED → salas.id</text>
+    <text class="key" x="20" y="112">PK, FK depa_id BIGINT UNSIGNED → departamentos.id</text>
+    <text class="field" x="20" y="136">PK composta (sala_id, depa_id)</text>
+    <text class="field" x="20" y="160">data DATE NOT NULL</text>
+    <text class="field" x="20" y="184">hora_inicio TIME NOT NULL</text>
+    <text class="field" x="20" y="208">hora_fim TIME NOT NULL</text>
+    <text class="field" x="20" y="232">finalidade TEXT NULL</text>
+    <text class="field" x="20" y="256">created_at TIMESTAMP NULL</text>
+    <text class="field" x="20" y="280">updated_at TIMESTAMP NULL</text>
+  </g>
+
+  <g transform="translate(40 1190)">
+    <rect class="card" width="600" height="250" rx="12"/>
+    <path class="head" d="M12 0h576a12 12 0 0 1 12 12v48H0V12A12 12 0 0 1 12 0z"/>
+    <text class="table-name" x="20" y="38">membros_classes</text>
+    <text class="key" x="20" y="88">PK, FK membro_id BIGINT UNSIGNED → membros.id</text>
+    <text class="key" x="20" y="112">PK, FK classe_id BIGINT UNSIGNED → classes.id</text>
+    <text class="field" x="20" y="136">PK composta (membro_id, classe_id)</text>
+    <text class="field" x="20" y="160">created_at TIMESTAMP NULL</text>
+    <text class="field" x="20" y="184">updated_at TIMESTAMP NULL</text>
+  </g>
+
+  <g transform="translate(670 1190)">
+    <rect class="card" width="600" height="275" rx="12"/>
+    <path class="head" d="M12 0h576a12 12 0 0 1 12 12v48H0V12A12 12 0 0 1 12 0z"/>
+    <text class="table-name" x="20" y="38">classe_presencas</text>
+    <text class="key" x="20" y="88">PK id BIGINT UNSIGNED AUTO_INCREMENT</text>
+    <text class="field" x="20" y="112">tipo ENUM(P, F) NOT NULL</text>
+    <text class="key" x="20" y="136">FK classe_id BIGINT UNSIGNED → classes.id</text>
+    <text class="key" x="20" y="160">FK membro_id BIGINT UNSIGNED → membros.id</text>
+    <text class="field" x="20" y="184">created_at TIMESTAMP NULL</text>
+    <text class="field" x="20" y="208">updated_at TIMESTAMP NULL</text>
+    <text class="note" x="20" y="238">As duas FKs têm ON DELETE CASCADE.</text>
+  </g>
+
+  <g transform="translate(1300 1190)">
+    <rect class="note-card" width="1230" height="275" rx="12"/>
+    <text class="note-title" x="26" y="42">Legenda e observações do esquema</text>
+    <text class="legend" x="26" y="82">PK</text><text class="note" x="70" y="82">Chave primária</text>
+    <text class="legend" x="300" y="82">FK</text><text class="note" x="344" y="82">Chave estrangeira</text>
+    <text class="legend" x="600" y="82">UQ</text><text class="note" x="644" y="82">Restrição UNIQUE</text>
+    <text class="note" x="26" y="126">• membros.email, membros.telefone e users.email são únicos no esquema.</text>
+    <text class="note" x="26" y="160">• salas_departamentos usa a chave composta sala_id + depa_id; não possui coluna id.</text>
+    <text class="note" x="26" y="194">• current_team_id em users não tem FK definida nesta migração.</text>
+    <text class="note" x="26" y="228">• Tabelas internas do Laravel (sessões, tokens, filas e migrations) foram omitidas.</text>
+  </g>
+</svg>

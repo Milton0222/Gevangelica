@@ -41,7 +41,7 @@
 
     <div class="charts-container">
         <div class="chart-card">
-            <h3>Crescimento de Membros (Últimos 6 meses)</h3>
+            <h3>Novos Membros por Mês (Últimos 6 meses)</h3>
             <canvas id="growthChart"></canvas>
         </div>
         <div class="chart-card">
@@ -53,17 +53,14 @@
     @endsection
 </x-app-layout>
 <script>
-    // --- INICIALIZAÇÃO DOS GRÁFICOS (CHART.JS) ---
-    
-    // Gráfico 1: Crescimento de Membros (Linha)
     const ctxGrowth = document.getElementById('growthChart').getContext('2d');
     new Chart(ctxGrowth, {
         type: 'line',
         data: {
-            labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
+            labels: @json($growthLabels),
             datasets: [{
                 label: 'Novos Membros',
-                data: [12, 19, 15, 25, 22, 30],
+                data: @json($growthData),
                 borderColor: '#3b82f6',
                 backgroundColor: 'rgba(59, 130, 246, 0.1)',
                 tension: 0.3,
@@ -73,15 +70,14 @@
         options: { responsive: true, plugins: { legend: { display: false } } }
     });
 
-    // Gráfico 2: Faixa Etária (Donut)
     const ctxDemo = document.getElementById('demographicChart').getContext('2d');
     new Chart(ctxDemo, {
         type: 'doughnut',
         data: {
-            labels: ['Crianças', 'Jovens', 'Adultos', 'Idosos'],
+            labels: @json($ageLabels),
             datasets: [{
-                data: [15, 45, 30, 10],
-                backgroundColor: ['#38bdf8', '#3b82f6', '#1e293b', '#a855f7']
+                data: @json($ageData),
+                backgroundColor: ['#38bdf8', '#a855f7', '#3b82f6', '#1e293b']
             }]
         },
         options: { responsive: true }

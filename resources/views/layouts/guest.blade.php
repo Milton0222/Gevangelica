@@ -30,18 +30,3 @@
 </body>
 
 </html>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-    
-    // Captura dos elementos do Modal de Login
-    const loginModal = document.getElementById("loginModal");
-    const btnAbrirLogin = document.getElementById("btnAbrirLogin");
-    const btnFecharLogin = document.getElementById("btnFecharLogin");
-
-    // Função para abrir o modal de login
-    
-        loginModal.classList.add("active");
-        document.body.style.overflow = "hidden"; // Impede o scroll de fundo
-    
-});
-</script>

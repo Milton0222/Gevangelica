@@ -1,0 +1,160 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1660" viewBox="0 0 1600 1660" role="img" aria-labelledby="title desc">
+  <title id="title">Diagrama Entidade-Relacionamento do EcclesiaDigital</title>
+  <desc id="desc">DER com as entidades principais, chaves primárias, chaves estrangeiras e cardinalidades.</desc>
+  <defs>
+    <style>
+      text { font-family: Inter, "Segoe UI", Arial, sans-serif; }
+      .page { fill: #f3f6fb; }
+      .title { fill: #14213d; font-size: 34px; font-weight: 750; }
+      .subtitle { fill: #64748b; font-size: 16px; }
+      .card { fill: #ffffff; stroke: #d7e0ed; stroke-width: 1.5; }
+      .head { fill: #155e75; }
+      .name { fill: #ffffff; font-size: 19px; font-weight: 700; }
+      .field { fill: #25344d; font-family: Consolas, "Courier New", monospace; font-size: 14px; }
+      .key { fill: #0e7490; font-size: 12px; font-weight: 700; }
+      .panel { fill: #ffffff; stroke: #d7e0ed; stroke-width: 1.5; }
+      .panel-title { fill: #172b4d; font-size: 19px; font-weight: 700; }
+      .relation { fill: #334155; font-size: 14px; }
+      .note { fill: #64748b; font-size: 13px; }
+      .dot { fill: #0e7490; }
+      .edge { fill: none; stroke: #5aa0b1; stroke-width: 2.5; marker-end: url(#arrow); }
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#5aa0b1"/>
+    </marker>
+  </defs>
+  <rect class="page" width="1600" height="1450"/>
+  <text class="title" x="80" y="70">Diagrama Entidade-Relacionamento (DER)</text>
+  <text class="subtitle" x="80" y="104">Entidades de negócio · PK = chave primária · FK = chave estrangeira · UK = valor único</text>
+
+  <g>
+    <path class="edge" d="M520 260 H580"/>
+    <path class="edge" d="M1020 260 H1080"/>
+    <path class="edge" d="M300 370 V420"/>
+    <path class="edge" d="M580 330 H545 V530 H520"/>
+    <path class="edge" d="M760 370 V420"/>
+    <path class="edge" d="M850 370 V420"/>
+    <path class="edge" d="M1300 370 V420"/>
+    <path class="edge" d="M1080 530 H1020"/>
+    <path class="edge" d="M700 640 V690"/>
+    <path class="edge" d="M900 640 H1050 V800 H1080"/>
+    <path class="edge" d="M1020 300 H1045 V800 H1080"/>
+    <path class="edge" d="M80 240 H55 V800 H80"/>
+    <path class="edge" d="M300 910 V960"/>
+    <path class="edge" d="M1520 220 H1545 V1070 H520"/>
+  </g>
+
+  <g transform="translate(80 150)">
+    <rect class="card" width="440" height="220" rx="12"/>
+    <path class="head" d="M12 0h416a12 12 0 0 1 12 12v44H0V12A12 12 0 0 1 12 0z"/>
+    <text class="name" x="18" y="35">users</text>
+    <text class="field" x="18" y="82">id</text><text class="key" x="385" y="82">PK</text>
+    <text class="field" x="18" y="108">name, email</text><text class="key" x="385" y="108">UK</text>
+    <text class="field" x="18" y="134">password, email_verified_at</text>
+    <text class="field" x="18" y="160">isAdmin, isPastar, isSecretario, ...</text>
+    <text class="field" x="18" y="186">two_factor_*, timestamps</text>
+  </g>
+
+  <g transform="translate(580 150)">
+    <rect class="card" width="440" height="220" rx="12"/>
+    <path class="head" d="M12 0h416a12 12 0 0 1 12 12v44H0V12A12 12 0 0 1 12 0z"/>
+    <text class="name" x="18" y="35">membros</text>
+    <text class="field" x="18" y="82">id</text><text class="key" x="385" y="82">PK</text>
+    <text class="field" x="18" y="108">user_id</text><text class="key" x="385" y="108">FK</text>
+    <text class="field" x="18" y="134">nome, morada, telefone, email</text>
+    <text class="field" x="18" y="160">genero, estado_civil, situacao, cargo</text>
+    <text class="field" x="18" y="186">data_nascimento, data_batismo</text>
+  </g>
+
+  <g transform="translate(1080 150)">
+    <rect class="card" width="440" height="220" rx="12"/>
+    <path class="head" d="M12 0h416a12 12 0 0 1 12 12v44H0V12A12 12 0 0 1 12 0z"/>
+    <text class="name" x="18" y="35">departamentos</text>
+    <text class="field" x="18" y="82">id</text><text class="key" x="385" y="82">PK</text>
+    <text class="field" x="18" y="108">nome</text>
+    <text class="field" x="18" y="134">lider_id</text><text class="key" x="385" y="134">FK</text>
+    <text class="field" x="18" y="160">timestamps</text>
+  </g>
+
+  <g transform="translate(80 420)">
+    <rect class="card" width="440" height="220" rx="12"/>
+    <path class="head" d="M12 0h416a12 12 0 0 1 12 12v44H0V12A12 12 0 0 1 12 0z"/>
+    <text class="name" x="18" y="35">contribuicoes</text>
+    <text class="field" x="18" y="82">id</text><text class="key" x="385" y="82">PK</text>
+    <text class="field" x="18" y="108">membro_id, user_id</text><text class="key" x="385" y="108">FK</text>
+    <text class="field" x="18" y="134">tipo, valor, obs</text>
+    <text class="field" x="18" y="160">timestamps</text>
+  </g>
+
+  <g transform="translate(580 420)">
+    <rect class="card" width="440" height="220" rx="12"/>
+    <path class="head" d="M12 0h416a12 12 0 0 1 12 12v44H0V12A12 12 0 0 1 12 0z"/>
+    <text class="name" x="18" y="35">classes</text>
+    <text class="field" x="18" y="82">id</text><text class="key" x="385" y="82">PK</text>
+    <text class="field" x="18" y="108">evento_id, professor_id</text><text class="key" x="385" y="108">FK</text>
+    <text class="field" x="18" y="134">grupo, frequencia</text>
+    <text class="field" x="18" y="160">timestamps</text>
+  </g>
+
+  <g transform="translate(1080 420)">
+    <rect class="card" width="440" height="220" rx="12"/>
+    <path class="head" d="M12 0h416a12 12 0 0 1 12 12v44H0V12A12 12 0 0 1 12 0z"/>
+    <text class="name" x="18" y="35">eventos</text>
+    <text class="field" x="18" y="82">id</text><text class="key" x="385" y="82">PK</text>
+    <text class="field" x="18" y="108">depa_id (nullable)</text><text class="key" x="385" y="108">FK</text>
+    <text class="field" x="18" y="134">nome, tipo, data, hora, local</text>
+    <text class="field" x="18" y="160">estado, finalidade, tema</text>
+    <text class="field" x="18" y="186">timestamps</text>
+  </g>
+
+  <g transform="translate(80 690)">
+    <rect class="card" width="440" height="220" rx="12"/>
+    <path class="head" d="M12 0h416a12 12 0 0 1 12 12v44H0V12A12 12 0 0 1 12 0z"/>
+    <text class="name" x="18" y="35">salas</text>
+    <text class="field" x="18" y="82">id</text><text class="key" x="385" y="82">PK</text>
+    <text class="field" x="18" y="108">user_id</text><text class="key" x="385" y="108">FK</text>
+    <text class="field" x="18" y="134">n_sala, estado</text>
+    <text class="field" x="18" y="160">timestamps</text>
+  </g>
+
+  <g transform="translate(580 690)">
+    <rect class="card" width="440" height="220" rx="12"/>
+    <path class="head" d="M12 0h416a12 12 0 0 1 12 12v44H0V12A12 12 0 0 1 12 0z"/>
+    <text class="name" x="18" y="35">membros_classes</text>
+    <text class="field" x="18" y="82">membro_id</text><text class="key" x="385" y="82">PK, FK</text>
+    <text class="field" x="18" y="108">classe_id</text><text class="key" x="385" y="108">PK, FK</text>
+    <text class="field" x="18" y="134">timestamps</text>
+    <text class="field" x="18" y="160">PK composta (membro_id, classe_id)</text>
+  </g>
+
+  <g transform="translate(1080 690)">
+    <rect class="card" width="440" height="220" rx="12"/>
+    <path class="head" d="M12 0h416a12 12 0 0 1 12 12v44H0V12A12 12 0 0 1 12 0z"/>
+    <text class="name" x="18" y="35">classe_presencas</text>
+    <text class="field" x="18" y="82">id</text><text class="key" x="385" y="82">PK</text>
+    <text class="field" x="18" y="108">classe_id, membro_id</text><text class="key" x="385" y="108">FK</text>
+    <text class="field" x="18" y="134">tipo (P/F), timestamps</text>
+  </g>
+
+  <g transform="translate(80 960)">
+    <rect class="card" width="440" height="220" rx="12"/>
+    <path class="head" d="M12 0h416a12 12 0 0 1 12 12v44H0V12A12 12 0 0 1 12 0z"/>
+    <text class="name" x="18" y="35">salas_departamentos</text>
+    <text class="field" x="18" y="82">sala_id, depa_id</text><text class="key" x="290" y="82">PK, FK</text>
+    <text class="field" x="18" y="108">data, hora_inicio, hora_fim</text>
+    <text class="field" x="18" y="134">finalidade</text>
+    <text class="field" x="18" y="160">timestamps</text>
+    <text class="field" x="18" y="186">PK composta (sala_id, depa_id)</text>
+  </g>
+
+  <rect class="panel" x="80" y="1220" width="1440" height="390" rx="16"/>
+  <text class="panel-title" x="112" y="1260">Relacionamentos (cardinalidades)</text>
+  <circle class="dot" cx="118" cy="1300" r="4"/><text class="relation" x="134" y="1306">users 1:N membros; users 1:N contribuicoes e salas</text>
+  <circle class="dot" cx="118" cy="1337" r="4"/><text class="relation" x="134" y="1343">membros 1:N contribuicoes e departamentos (como líder)</text>
+  <circle class="dot" cx="118" cy="1374" r="4"/><text class="relation" x="134" y="1380">departamentos 1:N eventos; evento pode não ter departamento</text>
+  <circle class="dot" cx="118" cy="1411" r="4"/><text class="relation" x="134" y="1417">eventos 1:N classes; membros 1:N classes como professor</text>
+  <circle class="dot" cx="118" cy="1448" r="4"/><text class="relation" x="134" y="1454">membros N:N classes, através de membros_classes</text>
+  <circle class="dot" cx="118" cy="1485" r="4"/><text class="relation" x="134" y="1491">membros 1:N classe_presencas; classes 1:N classe_presencas</text>
+  <circle class="dot" cx="118" cy="1522" r="4"/><text class="relation" x="134" y="1528">salas N:N departamentos, através de salas_departamentos</text>
+  <text class="note" x="112" y="1577">Tabelas internas do Laravel (sessões, tokens e filas) não estão representadas neste DER de negócio.</text>
+</svg>

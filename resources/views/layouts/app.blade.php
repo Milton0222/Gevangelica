@@ -52,8 +52,8 @@
                         <button class="dropdown-btn"><i class="fas fa-hand-holding-usd"></i> Finanças <i class="fas fa-caret-down arrow"></i></button>
                         <ul class="dropdown-container">
                             <li><a href="{{route('contribuicao.index')}}"><i class="fas fa-coins"></i>Contribuições</a></li>
-                            <!--<li><a href="#"><i class="fas fa-heart"></i> Ofertas</a></li>-->
-                            <li><a href="#"><i class="fas fa-file-invoice-dollar"></i> Relatórios</a></li>
+                            <!--<li><a href="#"><i class="fas fa-heart"></i> Ofertas</a></li>
+                            <li><a href="#"><i class="fas fa-file-invoice-dollar"></i> Relatórios</a></li>-->
                         </ul>
                     </li>
 
@@ -61,7 +61,7 @@
                         <button class="dropdown-btn"><i class="fas fa-calendar-alt"></i> Eventos <i class="fas fa-caret-down arrow"></i></button>
                         <ul class="dropdown-container">
                             <li><a href="{{route('evento.index')}}"><i class="fas fa-church"></i>Gerir</a></li>
-                            <li><a href="#"><i class="fas fa-book-open"></i>Relatório</a></li>
+                            <!--<li><a href="#"><i class="fas fa-book-open"></i>Relatório</a></li>-->
                         </ul>
                     </li>
                      <li class="dropdown-item">
@@ -119,8 +119,8 @@
                         <button class="dropdown-btn"><i class="fas fa-hand-holding-usd"></i> Finanças <i class="fas fa-caret-down arrow"></i></button>
                         <ul class="dropdown-container">
                             <li><a href="{{route('contribuicao.index')}}"><i class="fas fa-coins"></i>Contribuições</a></li>
-                            <!--<li><a href="#"><i class="fas fa-heart"></i> Ofertas</a></li>-->
-                            <li><a href="#"><i class="fas fa-file-invoice-dollar"></i> Relatórios</a></li>
+                            <!--<li><a href="#"><i class="fas fa-heart"></i> Ofertas</a></li>
+                            <li><a href="#"><i class="fas fa-file-invoice-dollar"></i> Relatórios</a></li>-->
                         </ul>
                     </li>
 

@@ -29,7 +29,7 @@
             @if(Auth::user())
               <a href="{{route('dashboard')}}" class="btn btn-login">{{Auth::user()->name}}</a>
             @else
-            <button class="btn btn-login" id="btnAbrirLogin"><i class="fas fa-sign-in-alt"></i> Entrar</button>
+            <button class="btn btn-login" onclick="return window.location.href=`{{ route('login') }}`"><i class="fas fa-sign-in-alt"></i> Entrar</button>
             @endif
         </div>
         <div class="menu-toggle" id="mobile-menu"><i class="fas fa-bars"></i></div>
